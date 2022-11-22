@@ -2,7 +2,7 @@
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
   <section class="income-section-item">
-    <div class="income-section-item__title">{{ item.title }}</div>
+    <a href="#" class="income-section-item__title">{{ item.title }}</a>
     <button class="income-section-item__icon-list">☰</button>
     <div class="income-section-item__count">{{ item.count }}</div>
     <div class="income-section-item__date-from">{{ item.from }}</div>
@@ -15,7 +15,12 @@
       <span class="income-section-item__value-end">250 000.50</span>
       <span class="income-section-item__value-end-smbl">UAH</span>
     </div>
-    <button class="income-section-item__button-delete">X</button>
+    <button
+      class="income-section-item__button-delete"
+      @click="$emit('remove-income', item.id)"
+    >
+      X
+    </button>
   </section>
 </template>
 
@@ -30,16 +35,20 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .income-section-item {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr 2fr 2fr 2fr 2fr 2fr;
-  align-items: center;
-  text-align: left;
+  place-items: center;
   border-radius: 5px;
   border: rgb(223, 220, 220) 1px solid;
   font-size: 12px;
   padding: 10px 15px;
+  color: grey;
+
+  &__title {
+    color: grey;
+  }
 
   &__icon-list {
     display: flex;
@@ -50,6 +59,17 @@ export default {
     height: 20px;
     width: 20px;
   }
+
+  &__button-delete {
+    background-color: red;
+    color: white;
+    width: 30px;
+    border-radius: 20%;
+  }
+}
+
+.done {
+  display: none;
 }
 </style>
 

@@ -11,6 +11,7 @@ const income = [
       { value: "2 500", symbol: "$" },
       { value: "250 000.50", symbol: "UAH" },
     ],
+    completed: false,
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const income = [
     from: "09 / 12",
     to: "06 / Apr / 2017",
     price: [{ value: "50", symbol: "UAH" }],
+    completed: false,
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ const income = [
       { value: "2 500.85", symbol: "$" },
       { value: "50.25", symbol: "UAH" },
     ],
+    completed: false,
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ const income = [
     from: "02 / 12",
     to: "06 / Apr / 2017",
     price: [{ value: "50.25", symbol: "UAH" }],
+    completed: false,
   },
 ];
 
@@ -47,6 +51,10 @@ export default createStore({
   },
   getters: {},
   mutations: {},
-  actions: {},
+  actions: {
+    removeIncome(id) {
+      console.log(id);
+    },
+  },
   modules: {},
 });
