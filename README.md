@@ -1,3 +1,3 @@
 # Inventory demo app
 
-[DEMO LINK](https://vasylzinchenko.github.io/inventory/) ㋡
+[DEMO LINK](https://vasylzinchenko.github.io/inventory/)
