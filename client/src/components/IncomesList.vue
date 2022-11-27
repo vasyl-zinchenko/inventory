@@ -2,11 +2,7 @@
 <template>
   <div>
     <section class="income-list">
-      <IncomeItem
-        v-for="item of income"
-        v-bind:item="item"
-        v-on:remove-income="removeIncome"
-      />
+      <IncomeItem />
     </section>
   </div>
 </template>
@@ -14,11 +10,13 @@
 <script setup>
 import IncomeItem from "@/components/IncomeItem.vue";
 import { computed } from "vue";
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
+import { useOrderStore } from "../store/index";
 
-const store = useStore();
-const income = computed(() => store.state.income);
-console.log(income.value);
+const store = useOrderStore();
+
+const orders = computed(() => store.orders);
+console.log(orders);
 </script>
 
 <script>
@@ -26,11 +24,7 @@ export default {
   components: {
     IncomeItem,
   },
-  methods: {
-    removeIncome(id) {
-      console.log(id);
-    },
-  },
+  methods: {},
 };
 </script>
 

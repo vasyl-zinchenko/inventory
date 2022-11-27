@@ -1,10 +1,11 @@
 {
   "name": "server",
   "main": "dist/server.js",
+  "type": "module",
   "scripts": {
     "build": "swc src -d dist",
-    "start": "node dist/server.js",
-    "dev": " ts-node-esm ./src/server.ts",
+    "start": "node src/server.js",
+    "dev": " ts-node-esm ./src/server.js",
     "format": "prettier --write . --ignore-path .gitignore",
     "lint": "eslint . --ignore-path .gitignore --fix",
     "fix-style": "npm run format && npm run lint -- --fix"

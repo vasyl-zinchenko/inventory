@@ -1,12 +1,14 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
-  <section class="income-section-item">
-    <a href="#" class="income-section-item__title">{{ item.title }}</a>
+  <section class="income-section-item" v-for="order in orders">
+    <a href="#" class="income-section-item__title">{{ order.title }}</a>
     <button class="income-section-item__icon-list">☰</button>
-    <div class="income-section-item__count">{{ item.count }}</div>
-    <div class="income-section-item__date-from">{{ item.from }}</div>
-    <div class="income-section-item__date-to">{{ item.to }}</div>
+    <div class="income-section-item__count">23 Products</div>
+    <div class="income-section-item__date-from">
+      {{ order.date.toString().slice(0, 9) }}
+    </div>
+    <!-- <div class="income-section-item__date-to">4</div> -->
     <div>
       <span class="income-section-item__value-start">2 500</span>
       <span class="income-section-item__value-start-smbl">$</span>
@@ -24,15 +26,20 @@
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+<script setup>
+import { onMounted, computed } from "vue";
+import { useOrderStore } from "../store/index";
+const store = useOrderStore();
+
+const orders = computed(() => {
+  return store.orders;
+});
+
+console.log(orders.value);
+
+onMounted(() => {
+  store.fetchOrders();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -54,6 +61,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
     border: 1px solid;
     border-radius: 50%;
     height: 20px;
@@ -72,15 +80,3 @@ export default {
   display: none;
 }
 </style>
-
-<!-- {
-  id: 1,
-  title: "Long long long income name",
-  count: "23 products",
-  from: "04 / 12",
-  to: "06 / Apr / 2017",
-  price: [
-    { value: "2 500", symbol: "$" },
-    { value: "250 000.50", symbol: "UAH" },
-  ],
-}, -->

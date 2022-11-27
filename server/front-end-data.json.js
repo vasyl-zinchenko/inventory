@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const orders = [
   {
     id: 1,

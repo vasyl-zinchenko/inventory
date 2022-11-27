@@ -1,11 +1,21 @@
+/* eslint-disable no-shadow */
 import { readdirSync } from 'fs';
 import { basename as _basename, join } from 'path';
 import Sequelize, { DataTypes } from 'sequelize';
 import { env as _env } from 'process';
+import path from 'path';
+import { fileURLToPath } from 'url';
+// import config from '../../config.json';
+
+// const __filename = fileURLToPath(import.meta.url);
+
+// const __dirname = path.resolve();
 
 const basename = _basename(__filename);
+
 const env = _env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
+
 const db = {};
 
 let sequelize;
@@ -43,3 +53,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 export default db;
+

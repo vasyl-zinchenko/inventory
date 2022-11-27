@@ -27,10 +27,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       guarantee: {
-        type: Sequelize.STRING,
+        type: Sequelize.JSONB,
       },
       price: {
-        type: Sequelize.STRING,
+        type: Sequelize.JSONB,
       },
       order: {
         type: Sequelize.INTEGER,
