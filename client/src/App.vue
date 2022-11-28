@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <HeaderInventory />
   <main class="main">
     <MainMenu />
     <router-view />
@@ -29,12 +29,12 @@
 </style>
 
 <script>
-import Header from "@/components/Header.vue";
+import HeaderInventory from "@/components/HeaderInventory.vue";
 import MainMenu from "@/components/MainMenu.vue";
 export default {
   name: "app",
   components: {
-    Header,
+    HeaderInventory,
     MainMenu,
   },
 };

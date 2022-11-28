@@ -1,13 +1,3 @@
-<script>
-export default {
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: "Search",
-  props: {
-    msg: String,
-  },
-};
-</script>
-
 <template>
   <header class="header">
     <div class="header__logo-search-block">
@@ -15,7 +5,9 @@ export default {
         <img class="header__logo-img" src="../assets/logo.png" />
       </div>
       <input
-        class="form-control mr-sm-3 h-25"
+        class="form-control mr-sm-3 h-25 form-control-sm"
+        v-model="store.searchQuery"
+        name="query"
         type="search"
         placeholder="Search"
         aria-label="Search"
@@ -25,6 +17,11 @@ export default {
     <div class="header__date">22 November</div>
   </header>
 </template>
+
+<script setup>
+import { useOrderStore } from "../store/index";
+const store = useOrderStore();
+</script>
 
 <style lang="scss">
 .header {

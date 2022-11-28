@@ -4,14 +4,14 @@
 <template>
   <section 
     class="income-section-item" 
-    v-for="order in orders"
+    v-for="order in filteredOrders"
     :key='order.id'
   >
     <a href="#" class="income-section-item__title">{{ order.title }}</a>
     <button class="income-section-item__icon-list">☰</button>
     <div class="income-section-item__count">23 Products</div>
     <div class="income-section-item__date-from">
-      {{ order.date.slice(0, 9) }}
+      {{ formatDate(order.date) }}
     </div>
     <!-- <div class="income-section-item__date-to">4</div> -->
     <div>
@@ -30,11 +30,22 @@
 <script setup>
 import { onMounted, computed } from "vue";
 import { useOrderStore } from "../store/index";
+import { watchEffect } from "vue";
 const store = useOrderStore();
+watchEffect(() => {
+  store.fetchOrders(store.searchQuery);
+});
 
 const orders = computed(() => {
   return store.orders;
 });
+
+const filteredOrders = computed(() => {
+  return orders.value.filter((order) =>
+    order.title.toLowerCase().includes(store.searchQuery.toLowerCase())
+  );
+});
+console.log(filteredOrders);
 
 onMounted(() => {
   store.fetchOrders();
@@ -42,6 +53,10 @@ onMounted(() => {
 
 function removeOrder(id) {
   store.orders = store.orders.filter((order) => order.id !== id);
+}
+
+function formatDate(date) {
+  return date.replace(/T|\.\d{3}Z/g, " ");
 }
 </script>
 

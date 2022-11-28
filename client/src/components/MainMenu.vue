@@ -5,10 +5,10 @@
       <img class ="user-section__picture" src="../assets/user.jpg" alt="user picture">
     </section>
     <router-link to="/">Income</router-link>
-    <router-link to="/groups">Groups</router-link>
+    <!-- <router-link to="/groups">Groups</router-link> -->
     <router-link to="/products">Products</router-link>
-    <router-link to="/users">Users</router-link>
-    <router-link to="/settings">Settings</router-link>
+    <!-- <router-link to="/users">Users</router-link>
+    <router-link to="/settings">Settings</router-link> -->
   </nav>
 </template>
 
