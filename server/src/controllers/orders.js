@@ -20,15 +20,19 @@ export const getOne = async(req, res) => {
 };
 
 export const add = async(req, res) => {
-  const { name } = req.body;
+  const { title, description } = req.body;
 
-  if (!name) {
+  if (!title || !description) {
     res.sendStatus(400);
 
     return;
   }
 
-  const newOrder = await orderService.createOrder(name);
+  const newOrder = await orderService
+    .createOrder(
+      title,
+      description,
+    );
 
   res.statusCode = 201;
   res.send(newOrder);
@@ -36,7 +40,7 @@ export const add = async(req, res) => {
 
 export const remove = async(req, res) => {
   const { orderId } = req.params;
-  const foundOrder = await orderService.getOrderById(orderId);
+  const foundOrder = await orderService.getById(orderId);
 
   if (!foundOrder) {
     res.sendStatus(404);
@@ -45,5 +49,5 @@ export const remove = async(req, res) => {
   }
 
   orderService.removeOrder(orderId);
-  res.sendStatus(204);
+  res.sendStatus(200);
 };

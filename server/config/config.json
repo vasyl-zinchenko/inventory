@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "test124",
-    "database": "dzencode",
-    "host": "localhost",
+    "username": "ddzghjrh",
+    "password": "JAp3TzLN44TgUFSu78_5iBkjRDlFz8xa",
+    "database": "ddzghjrh",
+    "host": "lucky.db.elephantsql.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "test124",
-    "database": "dzencode",
-    "host": "localhost",
+    "username": "ddzghjrh",
+    "password": "JAp3TzLN44TgUFSu78_5iBkjRDlFz8xa",
+    "database": "ddzghjrh",
+    "host": "lucky.db.elephantsql.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "test124",
-    "database": "dzencode",
-    "host": "localhost",
+    "username": "ddzghjrh",
+    "password": "JAp3TzLN44TgUFSu78_5iBkjRDlFz8xa",
+    "database": "ddzghjrh",
+    "host": "lucky.db.elephantsql.com",
     "dialect": "postgres"
   }
 }

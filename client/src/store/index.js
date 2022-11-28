@@ -14,5 +14,13 @@ export const useOrderStore = defineStore("orders", {
         console.log(error);
       }
     },
+    async deleteOrder(id) {
+      try {
+        this.orders.splice(id, 1);
+        return await axios.delete("http://localhost:3000/orders/" + id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });

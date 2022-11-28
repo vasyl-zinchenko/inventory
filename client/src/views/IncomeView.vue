@@ -1,12 +1,22 @@
 <template>
   <section class="income">
     <section class="income__wrapper income-section">
-      <HelloWorld msg="Welcome to Your Vue.js App" />
-      <h2 class="income-section__title">Income / 25</h2>
+      <section class="income-section__title-block">
+        <button type="button" class="btn btn-outline-success btn-sm btn-circle">
+          +
+        </button>
+        <h2 class="income-section__title-block_headline">
+          Income / {{ useOrderStore().orders.length }}
+        </h2>
+      </section>
       <IncomesList />
     </section>
   </section>
 </template>
+
+<script setup>
+import { useOrderStore } from "../store/index";
+</script>
 
 <script>
 import IncomesList from "@/components/IncomesList.vue";
@@ -25,10 +35,26 @@ export default {
   }
 }
 
+.btn-circle.btn-sm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
 .income-section {
-  &__title {
-    font-size: 20px;
-    font-weight: bolder;
+  &__title-block {
+    margin: 5px;
+    display: flex;
+
+    &_headline {
+      font-size: 20px;
+      font-weight: bolder;
+      margin-left: 10px;
+    }
   }
 }
 </style>

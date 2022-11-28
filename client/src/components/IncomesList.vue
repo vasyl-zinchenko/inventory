@@ -10,7 +10,6 @@
 <script setup>
 import IncomeItem from "@/components/IncomeItem.vue";
 import { computed } from "vue";
-// import { useStore } from "vuex";
 import { useOrderStore } from "../store/index";
 
 const store = useOrderStore();

@@ -14,7 +14,12 @@ export default {
       <div class="header__logo">
         <img class="header__logo-img" src="../assets/logo.png" />
       </div>
-      <input class="header__input" />
+      <input
+        class="form-control mr-sm-3 h-25"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
     </div>
 
     <div class="header__date">22 November</div>
