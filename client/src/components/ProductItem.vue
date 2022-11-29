@@ -1,6 +1,9 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
+Название продукта, тип
+продукта, даты гарантии в разных форматах, цена в разных валютах, Название
+прихода
 <template>
   <section 
     class="product-section-item" 

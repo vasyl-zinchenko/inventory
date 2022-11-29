@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { onMounted } from "vue";
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "http://localhost:3000";
 
 export const useOrderStore = defineStore("orders", {
   state: () => ({
     orders: [],
+    monitoreImg: "../assets/pathToFile.jpg",
     fullOrders: [],
     currentId: 0,
     currentOrder: [],

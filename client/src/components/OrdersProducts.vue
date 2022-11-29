@@ -8,6 +8,7 @@
     <button @click='useOrderStore().currentId = 0' class="order-section__btn-close" aria-label="Close">x</button>
     <h2 class="order-section__header">{{ store.currentTitle }}</h2>
     <section class="order-section__item" v-for="order in currentOrder.products" :key="order.id">
+      <img class="order-section__item__img" src="../assets/pathToFile.jpg" alt="">
       <div class="order-section__item__title-wrapper">
         <a href="#" class="order-section__item__title">{{ order.title }}</a>
       </div>
@@ -62,9 +63,8 @@ const currentOrder = computed(() => {
 
   &__item {
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr 2fr;
     width: 100%;
-    place-items: center;
     border-top: rgb(223 220 220 / 42%) 0.5px solid;
     font-size: 12px;
     padding: 10px 15px;
@@ -76,8 +76,13 @@ const currentOrder = computed(() => {
       box-shadow: 1px 1px 8px -2px rgb(124 122 122 / 46%);
       border-radius: 5px;
     }
+
+    &__img {
+      height: 25px;
+    }
   }
   &__item__title-wrapper {
+    text-align: left;
   }
 
   &__header {
