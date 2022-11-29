@@ -101,6 +101,13 @@ onMounted(() => {
   font-size: 12px;
   padding: 10px 15px;
   color: grey;
+  transition-duration: 0.3s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+    border-radius: 5px;
+  }
 
   &__count {
     display: flex;
@@ -122,6 +129,7 @@ onMounted(() => {
   }
 
   &__title {
+    text-decoration: none;
     font-size: 14px;
     color: grey;
   }
