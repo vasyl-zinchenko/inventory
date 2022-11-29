@@ -3,14 +3,18 @@ import HomeView from "../views/IncomeView.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "home",
+    path: "/orders",
+    name: "orders",
     component: HomeView,
   },
   {
     path: "/products",
     name: "products",
     component: () => import("../views/ProductsView.vue"),
+  },
+  {
+    path: "/",
+    redirect: "/orders",
   },
 ];
 

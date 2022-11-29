@@ -1,15 +1,16 @@
 <!-- eslint-disable prettier/prettier -->
+<!-- Название прихода, количество продуктов в приходе. Даты
+создания прихода в двух форматах, сумма прихода, равная сумме цен продуктов
+в двух валютах -->
 <template>
   <nav class="main__menu">
     <section class="user-section">
       <img class ="user-section__picture" src="../assets/user.jpg" alt="user picture">
     </section>
-    <router-link to="/">Income</router-link>
-    <!-- <router-link to="/groups">Groups</router-link> -->
+    <router-link to="/orders">Orders</router-link>
     <router-link to="/products">Products</router-link>
-    <!-- <router-link to="/users">Users</router-link>
-    <router-link to="/settings">Settings</router-link> -->
   </nav>
+  
 </template>
 
 <style lang="scss">

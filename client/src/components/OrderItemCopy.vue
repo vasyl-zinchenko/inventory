@@ -3,33 +3,24 @@
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
   <section 
-    class="income-section-item" 
+    class="order-section-item" 
     v-for="order in filteredOrders"
     :key='order.id'
   >
-    <a href="#" class="income-section-item__title">{{ order.title }}</a>
-    <button class="income-section-item__icon-list">☰</button>
-    <div class="income-section-item__count">23 Products</div>
-    <div class="income-section-item__date-from">
+    <button class="order-section-item__icon-list">☰</button>
+    <div class="order-section-item__count">23 Products</div>
+    <div class="order-section-item__date-from">
       {{ formatDate(order.date) }}
     </div>
-    <!-- <div class="income-section-item__date-to">4</div> -->
-    <div>
-      <span class="income-section-item__value-start">2 500</span>
-      <span class="income-section-item__value-start-smbl">$</span>
-    </div>
-    <div>
-      <span class="income-section-item__value-end">250 000.50</span>
-      <span class="income-section-item__value-end-smbl">UAH</span>
-    </div>
-    <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-outline-danger btn-sm">x</button>
+    <!-- <div class="order-section-item__date-to">4</div> -->
+    <!-- <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-outline-danger btn-sm">x</button> -->
 
   </section>
 </template>
 
 <script setup>
 import { onMounted, computed } from "vue";
-import { useOrderStore } from "../store/index";
+import { useOrderStore } from "../store/order";
 import { watchEffect } from "vue";
 const store = useOrderStore();
 watchEffect(() => {
@@ -51,9 +42,9 @@ onMounted(() => {
   store.fetchOrders();
 });
 
-function removeOrder(id) {
-  store.orders = store.orders.filter((order) => order.id !== id);
-}
+// function removeOrder(id) {
+//   store.orders = store.orders.filter((order) => order.id !== id);
+// }
 
 function formatDate(date) {
   return date.replace(/T|\.\d{3}Z/g, " ");
@@ -61,9 +52,10 @@ function formatDate(date) {
 </script>
 
 <style lang="scss" scoped>
-.income-section-item {
+.order-section-item {
   display: grid;
-  grid-template-columns: 4fr 1fr 1fr 2fr 2fr 2fr 2fr;
+  grid-template-columns: 1fr 0.5fr 1.5fr;
+  gap: 20px;
   place-items: center;
   border-radius: 5px;
   border: rgb(223, 220, 220) 1px solid;

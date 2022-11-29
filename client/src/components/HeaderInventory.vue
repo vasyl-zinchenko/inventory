@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { useOrderStore } from "../store/index";
+import { useOrderStore } from "../store/order";
 const store = useOrderStore();
 </script>
 

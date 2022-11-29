@@ -10,7 +10,7 @@
           +
         </button> -->
         <h2 class="income-section__title-block_headline">
-          Income / {{ useOrderStore().orders.length }}
+          Income / {{ useOrderStore().filteredOrders.length }}
         </h2>
       </section>
       <IncomesList />
@@ -19,11 +19,11 @@
 </template>
 
 <script setup>
-import { useOrderStore } from "../store/index";
+import { useOrderStore } from "../store/order";
 </script>
 
 <script>
-import IncomesList from "@/components/IncomesList.vue";
+import IncomesList from "@/components/OrdersList.vue";
 export default {
   name: "incomeList",
   components: {

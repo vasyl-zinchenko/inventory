@@ -1,16 +1,16 @@
 <!-- eslint-disable vue/valid-v-for -->
 <template>
   <div>
-    <section class="income-list">
-      <IncomeItem />
+    <section class="order-list">
+      <OrderItem />
     </section>
   </div>
 </template>
 
 <script setup>
-import IncomeItem from "@/components/IncomeItem.vue";
+import OrderItem from "@/components/OrderItem.vue";
 import { computed } from "vue";
-import { useOrderStore } from "../store/index";
+import { useOrderStore } from "../store/order";
 
 const store = useOrderStore();
 
@@ -21,14 +21,14 @@ console.log(orders);
 <script>
 export default {
   components: {
-    IncomeItem,
+    OrderItem,
   },
   methods: {},
 };
 </script>
 
-<style>
-.income-list {
+<style lang="scss" scoped>
+.order-list {
   display: flex;
   flex-direction: column;
   gap: 10px;

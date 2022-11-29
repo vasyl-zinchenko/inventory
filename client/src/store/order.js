@@ -1,19 +1,20 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { onMounted } from "vue";
 axios.defaults.baseURL = "http://localhost:3000/";
+
 export const useOrderStore = defineStore("orders", {
   state: () => ({
     orders: [],
+    filteredOrders: [],
     searchQuery: "",
     isLoading: false,
   }),
   actions: {
     async fetchOrders() {
       try {
-        this.isLoading = true;
         const data = await axios.get("/orders/");
         this.orders = data.data;
-        this.isLoading = false;
       } catch (error) {
         console.log(error);
       }
@@ -36,4 +37,8 @@ export const useOrderStore = defineStore("orders", {
       }
     },
   },
+});
+
+onMounted(() => {
+  useOrderStore.fetchOrders();
 });
