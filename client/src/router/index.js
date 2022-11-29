@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/IncomeView.vue";
+import HomeView from "../views/OrdersView.vue";
 
 const routes = [
   {

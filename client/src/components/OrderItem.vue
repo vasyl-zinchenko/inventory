@@ -15,11 +15,10 @@
     v-for="order in store.filteredOrders"
     :key='order.id'
   >
-  <component :is="currentComponent" :swap-component="swapComponent"></component>
   <div class="order-section-item__title-wrapper">
-    <a href="#" class="order-section-item__title">{{ order.title }}</a>
+    <a href="#" @click='currentOrder(order.id, order, order.title)' class="order-section-item__title">{{ order.title }}</a>
   </div>
-    <button type="button" class="btn btn-light btn-sm btn-rounded btn-floating" data-mdb-ripple-color="dark">
+    <button @click='currentOrder(order.id, order, order.title)' type="button" class="btn btn-light btn-sm btn-rounded btn-floating" data-mdb-ripple-color="dark">
       <i class="bi bi-list-ul" style="font-size: 15px;"></i>
     </button>
     <div class="order-section-item__count">
@@ -59,6 +58,12 @@ const orders = computed(() => {
   return store.orders;
 });
 
+function currentOrder(id, order, title) {
+  store.currentId = id;
+  store.currentOrder = order;
+  store.currentTitle = title;
+}
+
 store.fullOrders = computed(() => {
   return orders.value.map((order) => ({
     ...order,
@@ -75,12 +80,9 @@ store.filteredOrders = computed(() => {
 });
 
 function removeOrder(id) {
-  store.orders = store.orders.filter((order) => order.id !== id);
+  store.orders = store.orders.find((order) => order.id !== id);
 }
 
-// function formatDate(date) {
-//   return date.replace(/T|\.\d{3}Z/g, " ");
-// }
 function formatDate(date) {
   return date.slice(0, 10).replace(/-/g, " / ");
 }
@@ -101,7 +103,7 @@ onMounted(() => {
   font-size: 12px;
   padding: 10px 15px;
   color: grey;
-  transition-duration: 0.3s;
+  transition-duration: 0.5s;
 
   &:hover {
     transform: translateY(-1px);

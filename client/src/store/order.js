@@ -6,6 +6,9 @@ axios.defaults.baseURL = "http://localhost:3000/";
 export const useOrderStore = defineStore("orders", {
   state: () => ({
     orders: [],
+    currentId: 0,
+    currentOrder: [],
+    currentTitle: "",
     filteredOrders: [],
     searchQuery: "",
     isLoading: false,
