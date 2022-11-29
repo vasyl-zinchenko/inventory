@@ -80,7 +80,7 @@ store.filteredOrders = computed(() => {
 });
 
 function removeOrder(id) {
-  store.orders = store.orders.find((order) => order.id !== id);
+  store.orders = store.orders.filter((order) => order.id !== id);
 }
 
 function formatDate(date) {
@@ -103,6 +103,7 @@ onMounted(() => {
   font-size: 12px;
   padding: 10px 15px;
   color: grey;
+  background-color: white;
   transition-duration: 0.5s;
 
   &:hover {

@@ -8,7 +8,7 @@
       </section>
       <section class="order-section__products-of-orders">
         <OrdersList />
-        <OrdersProducts />
+        <OrdersProducts v-if="useOrderStore().currentId > 0" />
       </section>
     </section>
   </section>
@@ -31,6 +31,9 @@ export default {
 
 <style lang="scss">
 .order {
+  width: 100%;
+  background: #f0f3f5;
+
   &__wrapper {
     padding: 40px 60px;
   }
@@ -50,6 +53,8 @@ export default {
   &__products-of-orders {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
   }
 
   &__title-block {
