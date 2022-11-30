@@ -22,6 +22,7 @@ export default {
 
 <style>
 .product-list {
+  font-weight: 300;
   display: flex;
   flex-direction: column;
   gap: 10px;
