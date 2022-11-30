@@ -30,6 +30,7 @@ const store = useOrderStore();
   align-items: center;
   position: relative;
   padding: 10px 150px;
+  height: 80px;
   justify-content: space-between;
   background-color: white;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
