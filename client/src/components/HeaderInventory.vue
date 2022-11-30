@@ -23,13 +23,16 @@ import { useOrderStore } from "../store/order";
 const store = useOrderStore();
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .header {
+  grid-area: header;
   display: flex;
   align-items: center;
+  position: relative;
   padding: 10px 150px;
   justify-content: space-between;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
+  background-color: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 
   @media (max-width: 900px) {
     padding: 10px 50px 0 150px;

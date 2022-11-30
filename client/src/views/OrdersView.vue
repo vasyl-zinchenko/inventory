@@ -25,6 +25,7 @@ export default {
   name: "orderList",
   components: {
     OrdersList,
+    OrdersProducts,
   },
 };
 </script>
@@ -32,7 +33,6 @@ export default {
 <style lang="scss">
 .order {
   width: 100%;
-  background: #f0f3f5;
 
   &__wrapper {
     padding: 40px 60px;
@@ -51,8 +51,7 @@ export default {
 
 .order-section {
   &__products-of-orders {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 15px;
     width: 100%;
   }

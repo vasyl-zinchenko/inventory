@@ -1,7 +1,4 @@
 <!-- eslint-disable prettier/prettier -->
-<!-- Название прихода, количество продуктов в приходе. Даты
-создания прихода в двух форматах, сумма прихода, равная сумме цен продуктов
-в двух валютах -->
 <template>
   <nav class="main__menu">
     <section class="user-section">
@@ -15,10 +12,11 @@
 
 <style lang="scss">
 .main__menu {
+  grid-area: sidebar;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 10%);
+  background-color: white;
 
   a {
     font-weight: bold;

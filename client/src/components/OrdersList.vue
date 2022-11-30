@@ -1,8 +1,13 @@
 <!-- eslint-disable vue/valid-v-for -->
 <template>
   <div>
+    <!-- <section class="order-list">
+      <OrderItem v-if="useOrderStore().currentId === 0" />
+      <OrderItemCopy v-if="useOrderStore().currentId !== 0" />
+    </section> -->
     <section class="order-list">
-      <OrderItem />
+      <OrderItem v-if="useOrderStore().currentId === 0" />
+      <OrderItemCopy v-if="useOrderStore().currentId !== 0" />
     </section>
   </div>
 </template>
@@ -11,6 +16,7 @@
 import OrderItem from "@/components/OrderItem.vue";
 import { computed } from "vue";
 import { useOrderStore } from "../store/order";
+import OrderItemCopy from "./OrderItemCopy.vue";
 
 const store = useOrderStore();
 
@@ -22,6 +28,7 @@ console.log(orders);
 export default {
   components: {
     OrderItem,
+    OrderItemCopy,
   },
   methods: {},
 };

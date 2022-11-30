@@ -10,13 +10,15 @@
 открываться попап (см. скрины
 
 <template>
-  <section 
-    class="order-section-item" 
+  <section
+    class="order-section-item"
     v-for="order in store.filteredOrders"
     :key='order.id'
   >
   <div class="order-section-item__title-wrapper">
-    <a href="#" @click='currentOrder(order.id, order, order.title)' class="order-section-item__title">{{ order.title }}</a>
+    <a href="#" 
+      @click='currentOrder(order.id, order, order.title); useOrderStore().isActive = true' 
+      class="order-section-item__title">{{ order.title }}</a>
   </div>
     <button @click='currentOrder(order.id, order, order.title)' type="button" class="btn btn-light btn-sm btn-rounded btn-floating" data-mdb-ripple-color="dark">
       <i class="bi bi-list-ul" style="font-size: 15px;"></i>
@@ -58,6 +60,8 @@ const orders = computed(() => {
   return store.orders;
 });
 
+useOrderStore().isActive = useOrderStore().currentId !== 0 ? true : false;
+
 function currentOrder(id, order, title) {
   store.currentId = id;
   store.currentOrder = order;
@@ -94,10 +98,25 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.order-section-item_hiden-elements {
+  display: flex;
+  place-items: center;
+  border-radius: 5px;
+  border: rgb(223, 220, 220) 1px solid;
+  font-size: 12px;
+  padding: 10px 15px;
+  color: grey;
+  background-color: white;
+  transition-duration: 0.5s;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 25px;
+}
 .order-section-item {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr 2fr 2fr 1fr;
   place-items: center;
+  min-width: 895px;
   border-radius: 5px;
   border: rgb(223, 220, 220) 1px solid;
   font-size: 12px;

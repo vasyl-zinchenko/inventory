@@ -1,81 +1,168 @@
+<!-- eslint-disable no-unused-vars -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
-<template>
-  <section 
-    class="order-section-item" 
-    v-for="order in filteredOrders"
-    :key='order.id'
-  >
-    <button class="order-section-item__icon-list">☰</button>
-    <div class="order-section-item__count">23 Products</div>
-    <div class="order-section-item__date-from">
-      {{ formatDate(order.date) }}
-    </div>
-    <!-- <div class="order-section-item__date-to">4</div> -->
-    <!-- <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-outline-danger btn-sm">x</button> -->
 
+<template>
+  <section
+  :class="{ isActive: useOrderStore().currentOrder.id === order.id }"
+    class="container"
+    v-for="order in store.filteredOrders"
+    :key="order.id"
+  >
+    <section
+      class="order-section-item"
+      style="grid-template-columns: 4fr 1fr 1fr 2fr 2fr 1fr"
+    >
+      <button
+        @click="currentOrder(order.id, order, order.title)"
+        type="button"
+        class="btn btn-light btn-sm btn-rounded btn-floating"
+        data-mdb-ripple-color="dark"
+      >
+        <i class="bi bi-list-ul" style="font-size: 15px"></i>
+      </button>
+      <div class="order-section-item__count">
+        <div class="order-section-item__count_number">
+          {{ order.products.length }}
+        </div>
+        <div class="order-section-item__count_products">Products</div>
+      </div>
+
+      <div class="order-section-item__date-from">
+        {{ formatDate(order.date) }}
+      </div>
+    </section>
+    <div
+      class="order-section-item__arrow-block"
+      :class="{
+        arrowBlockActive: useOrderStore().currentOrder.id === order.id,
+      }"
+    >
+      <i
+        v-if="useOrderStore().currentOrder.id === order.id"
+        class="bi bi-caret-right-fill"
+        style="color: white"
+      ></i>
+    </div>
   </section>
 </template>
 
 <script setup>
+import { useProductStore } from "@/store/products";
 import { onMounted, computed } from "vue";
-import { useOrderStore } from "../store/order";
-import { watchEffect } from "vue";
-const store = useOrderStore();
-watchEffect(() => {
-  store.fetchOrders(store.searchQuery);
-});
+import { useOrderStore } from "@/store/order";
 
+const store = useOrderStore();
+const productSrore = useProductStore();
+
+// eslint-disable-next-line no-unused-vars
 const orders = computed(() => {
   return store.orders;
 });
 
-const filteredOrders = computed(() => {
-  return orders.value.filter((order) =>
+function currentOrder(id, order, title) {
+  store.currentId = id;
+  store.currentOrder = order;
+  store.currentTitle = title;
+}
+
+store.fullOrders = computed(() => {
+  return orders.value.map((order) => ({
+    ...order,
+    products: productSrore.products.filter(
+      (product) => product.order === order.id
+    ),
+  }));
+});
+
+useOrderStore().isActive =
+  useOrderStore().currentId === useOrderStore().currentOrder.id ? true : false;
+
+store.filteredOrders = computed(() => {
+  return store.fullOrders.filter((order) =>
     order.title.toLowerCase().includes(store.searchQuery.toLowerCase())
   );
 });
-console.log(filteredOrders);
+
+function formatDate(date) {
+  return date.slice(0, 10).replace(/-/g, " / ");
+}
 
 onMounted(() => {
   store.fetchOrders();
+  productSrore.fetchProducts();
 });
-
-// function removeOrder(id) {
-//   store.orders = store.orders.filter((order) => order.id !== id);
-// }
-
-function formatDate(date) {
-  return date.replace(/T|\.\d{3}Z/g, " ");
-}
 </script>
 
 <style lang="scss" scoped>
-.order-section-item {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr 1.5fr;
-  gap: 20px;
-  place-items: center;
+.container {
+  display: flex;
+  gap: 10px;
+  padding: 0;
   border-radius: 5px;
   border: rgb(223, 220, 220) 1px solid;
+  background-color: white;
+  transition-duration: 0.5s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+    border-radius: 5px;
+  }
+}
+.isActive {
+  box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+}
+
+.arrowBlockActive {
+  display: block;
+  width: 31px;
+  background: #cfd8dc;
+}
+.hidden-el {
+  grid-template-columns: 4fr 1fr 1fr 2fr 2fr 1fr;
+}
+.order-section-item {
+  display: flex;
+  place-items: center;
   font-size: 12px;
   padding: 10px 15px;
   color: grey;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 25px;
 
-  &__title {
-    color: grey;
+  &__count {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &_number {
+      font-size: 15px;
+    }
+
+    &_products {
+      font-size: 11px;
+    }
   }
 
-  &__icon-list {
+  &__arrow-block {
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: white;
-    border: 1px solid;
-    border-radius: 50%;
-    height: 20px;
-    width: 20px;
+    justify-content: center;
+    border-radius: 0px 4px 4px 0px;
+  }
+
+  &__title-wrapper {
+    width: 100%;
+    text-align: left;
+  }
+
+  &__title {
+    text-decoration: none;
+    font-size: 14px;
+    color: grey;
   }
 
   &__button-delete {

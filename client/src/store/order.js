@@ -7,6 +7,7 @@ export const useOrderStore = defineStore("orders", {
   state: () => ({
     orders: [],
     monitoreImg: "../assets/pathToFile.jpg",
+    isActive: false,
     fullOrders: [],
     currentId: 0,
     currentOrder: [],

@@ -34,6 +34,7 @@ const currentOrder = computed(() => {
 
 <style lang="scss" scoped>
 .order-section {
+  min-width: 670px;
   border: rgb(223, 220, 220) 1px solid;
   border-radius: 5px;
   background-color: white;
@@ -74,7 +75,6 @@ const currentOrder = computed(() => {
     &:hover {
       transform: translateY(-1px);
       box-shadow: 1px 1px 8px -2px rgb(124 122 122 / 46%);
-      border-radius: 5px;
     }
 
     &__img {
