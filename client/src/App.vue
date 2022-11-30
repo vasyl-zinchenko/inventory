@@ -7,17 +7,19 @@
 </template>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap");
 #app {
   display: grid;
   grid-template-columns: 1fr 91%;
   grid-template-rows: 1fr 93%;
   grid-template-areas: "header header" "sidebar main";
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px;
   text-align: center;
   background: #f0f3f5 !important;
+  font-family: "Roboto", sans-serif;
   min-height: 100vh;
 }
 

@@ -4,11 +4,17 @@
     <section class="user-section">
       <img class ="user-section__picture" src="../assets/user.jpg" alt="user picture">
     </section>
-    <router-link to="/orders">Orders</router-link>
-    <router-link to="/products">Products</router-link>
+    <router-link to="/orders">{{navLinks.orders}}</router-link>
+    <router-link to="/products">{{navLinks.products}}</router-link>
   </nav>
   
 </template>
+<script setup>
+const navLinks = {
+  orders: "ORDERS",
+  products: "PRODUCTS",
+};
+</script>
 
 <style lang="scss">
 .main__menu {
@@ -20,6 +26,7 @@
 
   a {
     font-weight: bold;
+    font-size: 12px;
     color: #2c3e50;
     text-decoration: none;
     margin-bottom: 20px;

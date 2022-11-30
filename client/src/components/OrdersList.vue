@@ -36,6 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .order-list {
+  font-weight: 300;
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -8,7 +8,8 @@
       </section>
       <section class="order-section__products-of-orders">
         <OrdersList />
-        <OrdersProducts v-if="useOrderStore().currentId > 0" />
+        <!-- <OrdersProducts v-if="useOrderStore().currentId > 0" /> -->
+        <OrdersProducts />
       </section>
     </section>
   </section>

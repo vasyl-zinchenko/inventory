@@ -8,9 +8,11 @@
     <button @click='useOrderStore().currentId = 0' class="order-section__btn-close" aria-label="Close">x</button>
     <h2 class="order-section__header">{{ store.currentTitle }}</h2>
     <section class="order-section__item" v-for="order in currentOrder.products" :key="order.id">
+      <div class="order-section__item_available"></div>
       <img class="order-section__item__img" src="../assets/pathToFile.jpg" alt="">
       <div class="order-section__item__title-wrapper">
-        <a href="#" class="order-section__item__title">{{ order.title }}</a>
+        <span class="order-section__item__title">{{ order.title }}</span>
+        <span class="order-section__item__title">{{ order.serialNumber }}</span>
       </div>
 
       <button class="btn btn-light btn-sm">
@@ -39,6 +41,7 @@ const currentOrder = computed(() => {
   border-radius: 5px;
   background-color: white;
   padding: 10px 0;
+  height: fit-content;
 
   &__btn-close {
     width: 25px;
@@ -64,17 +67,25 @@ const currentOrder = computed(() => {
 
   &__item {
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr 2fr;
+    align-items: center;
+    grid-template-columns: 4% 1fr 4fr 1fr 2fr;
     width: 100%;
     border-top: rgb(223 220 220 / 42%) 0.5px solid;
     font-size: 12px;
-    padding: 10px 15px;
+    padding: 5px 25px;
     color: grey;
     transition-duration: 0.5s;
 
     &:hover {
       transform: translateY(-1px);
       box-shadow: 1px 1px 8px -2px rgb(124 122 122 / 46%);
+    }
+
+    &_available {
+      height: 7px;
+      width: 7px;
+      background-color: #cddc39;
+      border-radius: 50%;
     }
 
     &__img {
@@ -86,8 +97,10 @@ const currentOrder = computed(() => {
   }
 
   &__header {
-    font-size: 18px;
-    font-weight: bold;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
   }
 }
 </style>
