@@ -8,15 +8,21 @@
     <button @click='useOrderStore().currentId = 0' class="order-section__btn-close" aria-label="Close">x</button>
     <h2 class="order-section__header">{{ store.currentTitle }}</h2>
     <section class="order-section__item" v-for="order in currentOrder.products" :key="order.id">
-      <div class="order-section__item_available"></div>
+      <div 
+        :class="{ isAvailableSmbl:isAvailable(order.isNew) === 'available', isNotAvailableSmbl:isAvailable(order.isNew) === 'under repair'}"
+        class="order-section__item_available"></div>
       <img class="order-section__item__img" src="../assets/pathToFile.jpg" alt="">
       <div class="order-section__item__title-wrapper">
-        <span class="order-section__item__title">{{ order.title }}</span>
-        <span class="order-section__item__title">{{ order.serialNumber }}</span>
+        <span class="order-section__item__title-wrapper_title">{{ order.title }}</span>
+        <span class="order-section__item__title-wrapper_serial-number">SN-{{ order.serialNumber }}</span>
       </div>
-
-      <button class="btn btn-light btn-sm">
-        <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
+      <span 
+        :class="{ isAvailable:isAvailable(order.isNew) === 'available' }"
+        class="order-section__item__status">{{ isAvailable(order.isNew) }}</span>
+      <button class="btn btn-sm" style='border:none'>
+        <i class="btn-delete bi bi-trash3-fill" 
+          style="font-size: 11px"
+        ></i>
       </button>
     </section>
   </section>
@@ -32,9 +38,31 @@ const store = useOrderStore();
 const currentOrder = computed(() => {
   return store.currentOrder;
 });
+
+function isAvailable(status) {
+  return status === 0 ? "under repair" : "available";
+}
 </script>
 
 <style lang="scss" scoped>
+.isAvailable {
+  color: #cddc39;
+}
+
+.isAvailableSmbl {
+  background-color: #cddc39;
+}
+
+.isNotAvailableSmbl {
+  background-color: grey;
+}
+
+.btn-delete {
+  &:active {
+    font-size: 12px;
+    color: black;
+  }
+}
 .order-section {
   min-width: 670px;
   border: rgb(223, 220, 220) 1px solid;
@@ -68,7 +96,7 @@ const currentOrder = computed(() => {
   &__item {
     display: grid;
     align-items: center;
-    grid-template-columns: 4% 1fr 4fr 1fr 2fr;
+    grid-template-columns: 4% 1fr 5fr 2fr 1fr;
     width: 100%;
     border-top: rgb(223 220 220 / 42%) 0.5px solid;
     font-size: 12px;
@@ -84,16 +112,33 @@ const currentOrder = computed(() => {
     &_available {
       height: 7px;
       width: 7px;
-      background-color: #cddc39;
       border-radius: 50%;
     }
 
     &__img {
       height: 25px;
     }
-  }
-  &__item__title-wrapper {
-    text-align: left;
+
+    &__status {
+      font-size: 11px;
+    }
+
+    &__title-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      text-align: left;
+
+      &_title {
+        color: #21323b;
+      }
+
+      &_serial-number {
+        color: grey;
+        font-weight: 200;
+        font-size: 11px;
+      }
+    }
   }
 
   &__header {

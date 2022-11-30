@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('orders', [{
-      title: "Order 1",
+      title: "Long name order longest name",
       description: "desc",
       date: new Date(),
     },{
@@ -10,7 +10,7 @@ module.exports = {
       description: "desc",
       date: new Date(),
     },{
-      title: "Order 3",
+      title: "Long order name order 3",
       description: "desc",
       date: new Date(),
     },

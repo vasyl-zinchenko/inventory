@@ -11,7 +11,7 @@
 #app {
   display: grid;
   grid-template-columns: 1fr 91%;
-  grid-template-rows: 1fr 93%;
+  grid-template-rows: 1fr 95%;
   grid-template-areas: "header header" "sidebar main";
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

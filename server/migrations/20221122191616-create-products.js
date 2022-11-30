@@ -10,9 +10,11 @@ module.exports = {
       },
       serialNumber: {
         type: Sequelize.STRING,
+        field: 'serial_number',
       },
       isNew: {
         type: Sequelize.INTEGER,
+        field: 'is_new',
       },
       photo: {
         type: Sequelize.STRING,

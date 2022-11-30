@@ -40,12 +40,19 @@ import { DataTypes } from 'sequelize';
 export const Products = sequelize.define('Products', {
 
   title: {
-    serialNumber: DataTypes.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 
   isNew: {
     type: DataTypes.INTEGER,
+    field: 'is_new',
+    allowNull: false,
+  },
+
+  serialNumber: {
+    type: DataTypes.STRING,
+    field: 'serial_number',
     allowNull: false,
   },
 
