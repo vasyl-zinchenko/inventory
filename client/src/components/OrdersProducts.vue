@@ -27,7 +27,7 @@
       ></div>
       <img
         class="order-section__item__img"
-        src="../assets/pathToFile.jpg"
+        v-bind:src="'http://localhost:3000/img/'+order.photo"
         alt=""
       />
       <div class="order-section__item__title-wrapper">

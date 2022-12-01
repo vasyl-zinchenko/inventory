@@ -20,7 +20,7 @@
     ></div>
     <img
       class="product-section-item__img"
-      src="../assets/pathToFile.jpg"
+      v-bind:src="'http://localhost:3000/img/'+product.photo"
       alt=""
     />
     <div class="product-section-item__title-wrapper">
