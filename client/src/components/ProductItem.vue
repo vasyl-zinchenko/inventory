@@ -67,7 +67,7 @@
         useOrderStore().isActive = true;
       "
       class="product-section-item__title_order"
-      >{{ product.order.title }}</a
+      >{{ orderTitle(product.order.title) }}</a
     ></div>
     <div>
       <!-- <span class="product-section-item__value-end">250 000.50</span> -->
@@ -75,11 +75,8 @@
         {{ formatDate(product.order.date) }}
       </div>
     </div>
+          <!-- @click="store.deleteProduct(product.id); removeProduct(product.id);" -->
     <button
-      @click="
-        store.deleteProduct(product.id);
-        removeProduct(product.id);
-      "
       class="btn btn-light btn-sm"
     >
       <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
@@ -103,6 +100,8 @@ const orders = computed(() => {
   return storeOrder.orders;
 });
 
+const orderTitle = (title) => (title ? title : "");
+
 // eslint-disable-next-line no-unused-vars
 const products = computed(() => {
   return store.products;
@@ -115,6 +114,15 @@ useProductStore().isActive = useProductStore().currentId !== 0 ? true : false;
 //   store.currentProduct = product;
 //   store.currentTitle = title;
 // }
+
+store.selectedProducts = computed(() => {
+  return products.value.filter(({ type }) => {
+    switch (useGeneralStore().filterValue) {
+      case "Monitors":
+        return products.value.filter((product) => product.type === "Monitors");
+    }
+  });
+});
 
 const productsWithOrder = computed(() => {
   return products.value.map((product) => ({
@@ -129,12 +137,55 @@ const currentOrder = computed(() => {
   );
 });
 
+// store.filteredProducts = computed(() => {
+//   return productsWithOrder.value.filter((product) =>
+//     product.title
+//       .toLowerCase()
+//       .includes(useGeneralStore().searchQuery.toLowerCase())
+//   );
+// });
+
+// const filteredTodos = todos
+//     .filter(({ completed, title }) => {
+//       switch (filterBy) {
+//         case SortType.ACTIVE:
+//           return !completed && checkQuery(query, title);
+
+//         case SortType.COMPLETED:
+//           return completed && checkQuery(query, title);
+
+//         default:
+//           return checkQuery(query, title);
+//       }
+//     });
+
+function checkQuery(query, content) {
+  return content.toLowerCase().includes(query.toLowerCase());
+}
+
 store.filteredProducts = computed(() => {
-  return productsWithOrder.value.filter((product) =>
-    product.title
-      .toLowerCase()
-      .includes(useGeneralStore().searchQuery.toLowerCase())
-  );
+  return productsWithOrder.value.filter(({ type, title }) => {
+    switch (useGeneralStore().filterValue) {
+      case "Laptops":
+        return (
+          type === "Laptops" && checkQuery(useGeneralStore().searchQuery, title)
+        );
+
+      case "Monitors":
+        return (
+          type === "Monitors" &&
+          checkQuery(useGeneralStore().searchQuery, title)
+        );
+
+      case "Phones":
+        return (
+          type === "Phones" && checkQuery(useGeneralStore().searchQuery, title)
+        );
+
+      default:
+        return checkQuery(useGeneralStore().searchQuery, title);
+    }
+  });
 });
 
 function isAvailable(status) {

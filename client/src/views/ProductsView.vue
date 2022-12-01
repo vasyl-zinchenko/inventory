@@ -5,15 +5,53 @@
         <h2 class="product-section__title-block_headline">
           Product / {{ useProductStore().filteredProducts.length }}
         </h2>
-        <v-select :options="books" label="title"></v-select>
+        <span style="font-size: 9px; padding: 3px 8px; color: grey">Type</span>
+        <select
+          v-model="storeGeneral.filterValue"
+          style="width: 200px; height: 20px; font-size: 9px; padding: 3px 8px"
+          class="form-select"
+          aria-label="Default select example"
+        >
+          <option
+            v-for="option in optionsTypeProduct"
+            v-bind:value="option"
+            style="color: black"
+            v-bind:key="option"
+          >
+            {{ option }}
+          </option>
+        </select>
       </section>
       <ProductsList />
     </section>
   </section>
 </template>
 
+<!-- eslint-disable no-unused-vars -->
 <script setup>
-import { useProductStore } from "../store/products";
+import { useProductStore } from "@/store/products";
+import { useGeneralStore } from "@/store/general";
+import { onMounted, computed } from "vue";
+
+const store = useProductStore();
+const storeGeneral = useGeneralStore();
+
+const optionsTypeProduct = ["All", "Monitors", "Phones", "Laptops"];
+
+const products = computed(() => {
+  return store.products;
+});
+
+onMounted(() => {
+  store.fetchProducts();
+});
+
+// const optionsTypeProduct = {
+//   all: "All",
+//   monitors: "Monitors",
+//   phones: "Phones",
+//   laptops: "Laptops",
+// };
 </script>
 
 <script>
@@ -27,6 +65,11 @@ export default {
 </script>
 
 <style lang="scss">
+.form-select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .product {
   background: #f0f3f5;
   &__wrapper {
@@ -52,8 +95,7 @@ export default {
     &_headline {
       font-size: 20px;
       font-weight: bolder;
-      margin-left: 10px;
-      margin-bottom: 45px;
+      margin: 0 20px 45px 10px;
     }
   }
 }
