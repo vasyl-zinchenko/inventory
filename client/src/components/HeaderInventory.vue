@@ -19,8 +19,8 @@
 </template>
 
 <script setup>
-import { useOrderStore } from "../store/order";
-const store = useOrderStore();
+import { useGeneralStore } from "../store/general";
+const store = useGeneralStore();
 </script>
 
 <style lang="scss" scoped>

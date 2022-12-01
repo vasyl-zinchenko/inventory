@@ -2,26 +2,53 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
+<script>
+import Modal from "@/components/ModalComponent.vue";
+
+export default {
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
+};
+</script>
 
 <template>
   <section
     class="order-section-item"
     v-for="order in store.filteredOrders"
-    :key='order.id'
+    :key="order.id"
   >
-  <div class="order-section-item__title-wrapper">
-    <a href="#" 
-      @click='currentOrder(order.id, order, order.title); useOrderStore().isActive = true' 
-      class="order-section-item__title">{{ order.title }}</a>
-  </div>
-    <button @click='currentOrder(order.id, order, order.title)' type="button" class="btn btn-light btn-sm btn-rounded btn-floating" data-mdb-ripple-color="dark">
-      <i class="bi bi-list-ul" style="font-size: 15px;"></i>
+    <div class="order-section-item__title-wrapper">
+      <a
+        href="#"
+        @click="
+          currentOrder(order.id, order, order.title);
+          useOrderStore().isActive = true;
+        "
+        class="order-section-item__title"
+        >{{ order.title }}</a
+      >
+    </div>
+    <button
+      @click="currentOrder(order.id, order, order.title)"
+      type="button"
+      class="btn btn-light btn-sm btn-rounded btn-floating"
+      data-mdb-ripple-color="dark"
+    >
+      <i class="bi bi-list-ul" style="font-size: 15px"></i>
     </button>
     <div class="order-section-item__count">
-      <div class="order-section-item__count_number">{{order.products.length}}</div>
+      <div class="order-section-item__count_number">
+        {{ order.products.length }}
+      </div>
       <div class="order-section-item__count_products">Products</div>
     </div>
-   
+
     <div class="order-section-item__date-from">
       {{ formatDate(order.date) }}
     </div>
@@ -34,17 +61,53 @@
       <span class="order-section-item__value-end">250 000.50</span>
       <span class="order-section-item__value-end-smbl">UAH</span>
     </div>
-    <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-light btn-sm">
+    <!-- <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-light btn-sm">
+      <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
+    </button> -->
+
+    <button
+      id="show-modal"
+      @click="
+        currentOrder(order.id, order, '');
+        showModal = true;
+      "
+      class="btn btn-light btn-sm"
+    >
       <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
     </button>
-
   </section>
+
+  <Teleport to="body">
+    <modal :show="showModal" @close="showModal = false">
+      <template #footer>
+        <button class="modal-close-link" @click="showModal = false">
+          CANCEL
+        </button>
+        <button
+          @click="
+            // store.deleteOrder(useOrderStore().currentId);
+            removeOrder(useOrderStore().currentId);
+            showModal = false;
+          "
+          type="button"
+          class="modal-delete-button"
+        >
+          <i
+            class="bi bi-trash3-fill"
+            style="font-size: 10px; margin-right: 5px"
+          ></i>
+          DELETE
+        </button>
+      </template>
+    </modal>
+  </Teleport>
 </template>
 
 <script setup>
 import { useProductStore } from "@/store/products";
 import { onMounted, computed } from "vue";
 import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
 
 const store = useOrderStore();
 const productSrore = useProductStore();
@@ -62,6 +125,11 @@ function currentOrder(id, order, title) {
   store.currentTitle = title;
 }
 
+// function checkIdForModal(id, order) {
+//   store.currentModalId = id;
+//   store.currentOrder = order;
+// }
+
 store.fullOrders = computed(() => {
   return orders.value.map((order) => ({
     ...order,
@@ -73,10 +141,12 @@ store.fullOrders = computed(() => {
 
 store.filteredOrders = computed(() => {
   return store.fullOrders.filter((order) =>
-    order.title.toLowerCase().includes(store.searchQuery.toLowerCase())
+    order.title
+      .toLowerCase()
+      .includes(useGeneralStore().searchQuery.toLowerCase())
   );
 });
-
+// eslint-disable-next-line no-unused-vars
 function removeOrder(id) {
   store.orders = store.orders.filter((order) => order.id !== id);
 }
@@ -158,7 +228,42 @@ onMounted(() => {
   }
 }
 
-.done {
-  display: none;
+.modal-close-link {
+  color: white;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  transition-duration: 0.3s;
+  background: none;
+  border: none;
+
+  &:hover {
+    text-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
+  }
+
+  &:active {
+    text-shadow: 2px 1px 10px rgba(150, 150, 150, 1);
+  }
+}
+
+.modal-delete-button {
+  color: #e51d39;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 30px;
+  margin: 20px;
+  transition-duration: 0.3s;
+  box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+
+  &:hover {
+    box-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
+  }
+
+  &:active {
+    box-shadow: 2px 1px 10px rgba(150, 150, 150, 1);
+  }
 }
 </style>

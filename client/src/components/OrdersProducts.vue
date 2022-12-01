@@ -5,24 +5,46 @@
 
 <template>
   <section class="order-section position-relative">
-    <button @click='useOrderStore().currentId = 0' class="order-section__btn-close" aria-label="Close">x</button>
+    <button
+      @click="useOrderStore().currentTitle = ''"
+      class="order-section__btn-close"
+      aria-label="Close"
+    >
+      x
+    </button>
     <h2 class="order-section__header">{{ store.currentTitle }}</h2>
-    <section class="order-section__item" v-for="order in currentOrder.products" :key="order.id">
-      <div 
-        :class="{ isAvailableSmbl:isAvailable(order.isNew) === 'available', isNotAvailableSmbl:isAvailable(order.isNew) === 'under repair'}"
-        class="order-section__item_available"></div>
-      <img class="order-section__item__img" src="../assets/pathToFile.jpg" alt="">
+    <section
+      class="order-section__item"
+      v-for="order in currentOrder.products"
+      :key="order.id"
+    >
+      <div
+        :class="{
+          isAvailableSmbl: isAvailable(order.isNew) === 'available',
+          isNotAvailableSmbl: isAvailable(order.isNew) === 'under repair',
+        }"
+        class="order-section__item_available"
+      ></div>
+      <img
+        class="order-section__item__img"
+        src="../assets/pathToFile.jpg"
+        alt=""
+      />
       <div class="order-section__item__title-wrapper">
-        <span class="order-section__item__title-wrapper_title">{{ order.title }}</span>
-        <span class="order-section__item__title-wrapper_serial-number">SN-{{ order.serialNumber }}</span>
+        <span class="order-section__item__title-wrapper_title">{{
+          order.title
+        }}</span>
+        <span class="order-section__item__title-wrapper_serial-number"
+          >SN-{{ order.serialNumber }}</span
+        >
       </div>
-      <span 
-        :class="{ isAvailable:isAvailable(order.isNew) === 'available' }"
-        class="order-section__item__status">{{ isAvailable(order.isNew) }}</span>
-      <button class="btn btn-sm" style='border:none'>
-        <i class="btn-delete bi bi-trash3-fill" 
-          style="font-size: 11px"
-        ></i>
+      <span
+        :class="{ isAvailable: isAvailable(order.isNew) === 'available' }"
+        class="order-section__item__status"
+        >{{ isAvailable(order.isNew) }}</span
+      >
+      <button class="btn btn-sm" style="border: none">
+        <i class="btn-delete bi bi-trash3-fill" style="font-size: 11px"></i>
       </button>
     </section>
   </section>

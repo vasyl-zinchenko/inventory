@@ -10,6 +10,7 @@ export const useOrderStore = defineStore("orders", {
     isActive: false,
     fullOrders: [],
     currentId: 0,
+    currentModalId: 0,
     currentOrder: [],
     currentTitle: "",
     filteredOrders: [],

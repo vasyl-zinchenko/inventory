@@ -5,6 +5,8 @@ axios.defaults.baseURL = "http://localhost:3000";
 export const useProductStore = defineStore("products", {
   state: () => ({
     products: [],
+    searchQuery: "",
+    filteredProducts: [],
   }),
   actions: {
     async fetchProducts() {

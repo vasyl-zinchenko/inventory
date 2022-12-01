@@ -8,7 +8,7 @@
       </section>
       <section class="order-section__products-of-orders">
         <OrdersList />
-        <OrdersProducts v-if="useOrderStore().currentId > 0" />
+        <OrdersProducts v-if="useOrderStore().currentTitle.length > 0" />
       </section>
     </section>
   </section>
@@ -64,6 +64,7 @@ export default {
       font-size: 20px;
       font-weight: bolder;
       margin-left: 10px;
+      margin-bottom: 45px;
     }
   }
 }

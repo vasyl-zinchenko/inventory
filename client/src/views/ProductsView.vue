@@ -3,8 +3,9 @@
     <section class="product__wrapper product-section">
       <section class="product-section__title-block">
         <h2 class="product-section__title-block_headline">
-          Product / {{ useProductStore().products.length }}
+          Product / {{ useProductStore().filteredProducts.length }}
         </h2>
+        <v-select :options="books" label="title"></v-select>
       </section>
       <ProductsList />
     </section>
@@ -51,6 +52,7 @@ export default {
       font-size: 20px;
       font-weight: bolder;
       margin-left: 10px;
+      margin-bottom: 45px;
     }
   }
 }

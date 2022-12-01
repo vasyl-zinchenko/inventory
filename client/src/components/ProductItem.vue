@@ -1,4 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
+<!-- eslint-disable no-undef -->
+<!-- eslint-disable no-unused-vars -->
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
@@ -6,7 +8,7 @@
 <template>
   <section
     class="product-section-item"
-    v-for="product in products"
+    v-for="product in store.filteredProducts"
     :key="product.id"
   >
     <div
@@ -22,19 +24,14 @@
       alt=""
     />
     <div class="product-section-item__title-wrapper">
-      <span
-        class="product-section-item__title-wrapper_title"
-        @click="
-          currentProduct(product.id, product, product.title);
-          useProductStore().isActive = true;
-        "
-        >{{ product.title }}</span
-      >
+      <span class="product-section-item__title-wrapper_title">{{
+        product.title
+      }}</span>
       <span class="product-section-item__title-wrapper_serial-number"
         >SN-{{ product.serialNumber }}</span
       >
     </div>
-    
+
     <span
       :class="{ isAvailable: isAvailable(product.isNew) === 'available' }"
       class="product-section-item__status"
@@ -42,28 +39,41 @@
     >
 
     <div class="product-section-item__title-wrapper">
-      <div class="product-section-item__count_products">
-        from {{formatDate(product.guarantee.start)}}
+      <div class="product-section-item__count_products dateFormat">
+        <span style="font-size: 8px">from </span>
+        {{ formatDate(product.guarantee.start) }}
       </div>
-      <div class="product-section-item__count_products">to {{formatDate(product.guarantee.end)}}</div>
+      <div class="product-section-item__count_products dateFormat">
+        <span style="font-size: 8px">to</span>
+        {{ formatDate(product.guarantee.end) }}
+      </div>
     </div>
 
-    <span
-      class="product-section-item__status"
-      >{{ isNew(product.isNew) }}</span
-    >
+    <span class="product-section-item__status">{{ isNew(product.isNew) }}</span>
 
-    <div class="product-section-item__date-from">
-      {{ formatDate(product.date) }}
+    <div class="product-section-item__title-wrapper">
+      <span class="product-section-item__title-wrapper_serial-number"
+        >{{ product.price[0].value }} $</span
+      >
+
+      <span class="product-section-item__title-wrapper_title"
+        >{{ product.price[1].value }} {{ product.price[1].symbol }}</span
+      >
     </div>
-    <!-- <div class="income-section-item__date-to">4</div> -->
-    <!-- <div>
-      <span class="product-section-item__value-start">2 500</span>
-      <span class="product-section-item__value-start-smbl">$</span>
-    </div> -->
+    <div style="display:flex; justify-content:start; width:100%">    <a
+      href="#"
+      @click="
+        currentOrder(order.id, order, order.title);
+        useOrderStore().isActive = true;
+      "
+      class="product-section-item__title_order"
+      >{{ product.order.title }}</a
+    ></div>
     <div>
-      <span class="product-section-item__value-end">250 000.50</span>
-      <span class="product-section-item__value-end-smbl">UAH</span>
+      <!-- <span class="product-section-item__value-end">250 000.50</span> -->
+      <div class="product-section-item__date-from">
+        {{ formatDate(product.order.date) }}
+      </div>
     </div>
     <button
       @click="
@@ -76,12 +86,22 @@
     </button>
   </section>
 </template>
+<!-- eslint-disable no-unused-vars -->
 
 <script setup>
 import { useProductStore } from "@/store/products";
+import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
 import { onMounted, computed } from "vue";
 
 const store = useProductStore();
+
+// eslint-disable-next-line no-unused-vars
+const storeOrder = useOrderStore();
+
+const orders = computed(() => {
+  return storeOrder.orders;
+});
 
 // eslint-disable-next-line no-unused-vars
 const products = computed(() => {
@@ -90,15 +110,30 @@ const products = computed(() => {
 
 useProductStore().isActive = useProductStore().currentId !== 0 ? true : false;
 
-function currentProduct(id, product, title) {
-  store.currentId = id;
-  store.currentProduct = product;
-  store.currentTitle = title;
-}
+// function currentProduct(id, product, title) {
+//   store.currentId = id;
+//   store.currentProduct = product;
+//   store.currentTitle = title;
+// }
+
+const productsWithOrder = computed(() => {
+  return products.value.map((product) => ({
+    ...product,
+    order: orders.value.find((order) => order.id === product.order),
+  }));
+});
+
+const currentOrder = computed(() => {
+  return products.value.map((product) =>
+    orders.value.find((order) => order.id === product.order)
+  );
+});
 
 store.filteredProducts = computed(() => {
-  return store.products.filter((product) =>
-    product.title.toLowerCase().includes(store.searchQuery.toLowerCase())
+  return productsWithOrder.value.filter((product) =>
+    product.title
+      .toLowerCase()
+      .includes(useGeneralStore().searchQuery.toLowerCase())
   );
 });
 
@@ -115,11 +150,12 @@ function removeProduct(id) {
 }
 
 function formatDate(date) {
-  return date.slice(0, 10).replace(/-/g, " / ");
+  return date.slice(0, 10).replace(/-/g, "/");
 }
 
 onMounted(() => {
   store.fetchProducts();
+  storeOrder.fetchOrders();
 });
 </script>
 
@@ -134,6 +170,12 @@ onMounted(() => {
 
 .isNotAvailableSmbl {
   background-color: grey;
+}
+
+.dateFormat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .product-section-item_hiden-elements {
   display: flex;
@@ -151,7 +193,7 @@ onMounted(() => {
 }
 .product-section-item {
   display: grid;
-  grid-template-columns: 4% 1fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2% 0.5fr 2fr 1fr 0.65fr 1fr 1fr 1fr 1fr 0.5fr;
   place-items: center;
   min-width: 895px;
   border-radius: 5px;
@@ -162,6 +204,14 @@ onMounted(() => {
   background-color: white;
   transition-duration: 0.5s;
 
+  @media (min-width: 2560px) {
+    grid-template-columns: 2% 5% 2fr 1fr 0.35fr 1fr 1fr 1fr 1fr 0.5fr;
+  }
+
+  @media (min-width: 1440px) {
+    grid-template-columns: 2% 0.5fr 2fr 1fr 0.65fr 1fr 1fr 1.6fr 1fr 0.5fr;
+  }
+
   &:hover {
     transform: translateY(-1px);
     box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
@@ -170,6 +220,13 @@ onMounted(() => {
 
   &__status {
     font-size: 11px;
+  }
+
+  &__title_order {
+    text-decoration: none;
+    text-align: left;
+    font-size: 14px;
+    color: grey;
   }
 
   &__title-wrapper {

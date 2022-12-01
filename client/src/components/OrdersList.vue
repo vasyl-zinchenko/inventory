@@ -5,9 +5,14 @@
       <OrderItem v-if="useOrderStore().currentId === 0" />
       <OrderItemCopy v-if="useOrderStore().currentId !== 0" />
     </section> -->
-    <section class="order-list">
-      <OrderItem v-if="useOrderStore().currentId === 0" />
-      <OrderItemCopy v-if="useOrderStore().currentId !== 0" />
+    <section
+      class="order-list"
+      v-if="useOrderStore().currentTitle.length === 0"
+    >
+      <OrderItem />
+    </section>
+    <section class="order-list" v-else>
+      <OrderItemCopy />
     </section>
   </div>
 </template>
