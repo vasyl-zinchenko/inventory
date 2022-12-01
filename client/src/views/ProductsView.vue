@@ -28,6 +28,7 @@ export default {
 
 <style lang="scss">
 .product {
+  background: #f0f3f5;
   &__wrapper {
     padding: 40px 60px;
   }

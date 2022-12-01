@@ -4,12 +4,14 @@
     <section class="user-section">
       <img class ="user-section__picture" src="../assets/user.jpg" alt="user picture">
     </section>
-    <router-link to="/orders">{{navLinks.orders}}</router-link>
-    <router-link to="/products">{{navLinks.products}}</router-link>
+    <router-link @click="useGeneralStore().searchQuery =''" to="/orders">{{navLinks.orders}}</router-link>
+    <router-link @click="useGeneralStore().searchQuery =''" to="/products">{{navLinks.products}}</router-link>
   </nav>
   
 </template>
 <script setup>
+import { useGeneralStore } from "../store/general";
+
 const navLinks = {
   orders: "ORDERS",
   products: "PRODUCTS",

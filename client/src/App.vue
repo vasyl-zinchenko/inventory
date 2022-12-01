@@ -10,7 +10,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap");
 #app {
   display: grid;
-  width: fit-content;
   grid-template-columns: 1fr 11fr;
   grid-template-rows: 0fr 1fr;
   grid-template-areas: "header header" "sidebar main";
