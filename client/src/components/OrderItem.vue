@@ -50,7 +50,6 @@ export default {
     <div class="order-section-item__date-from">
       {{ formatDate(order.date) }}
     </div>
-    <!-- <div class="income-section-item__date-to">4</div> -->
     <!-- <div>
       <span class="order-section-item__value-start">2 500</span>
       <span class="order-section-item__value-start-smbl">$</span>
