@@ -40,7 +40,7 @@ import { DataTypes } from 'sequelize';
 export const Products = sequelize.define('Products', {
 
   title: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
 

@@ -5,5 +5,8 @@ export const useGeneralStore = defineStore("general", {
     searchQuery: "",
     isLoading: false,
     filterValue: "All",
+    showModal: false,
+    ShowModalAddOrder: false,
+    ShowModalAddProduct: true,
   }),
 });

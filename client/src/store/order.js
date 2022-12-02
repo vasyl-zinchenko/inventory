@@ -15,8 +15,15 @@ export const useOrderStore = defineStore("orders", {
     currentTitle: "",
     filteredOrders: [],
     searchQuery: "",
+    title: "",
     isLoading: false,
   }),
+  getters: {
+    addOrder(state) {
+      return state.title;
+    },
+  },
+
   actions: {
     async fetchOrders() {
       try {
@@ -33,12 +40,12 @@ export const useOrderStore = defineStore("orders", {
         console.log(error);
       }
     },
-    async postOrder(title, description) {
+    async postOrder(title) {
       try {
-        return await axios.post("/orders/", {
+        const data = await axios.post("/orders/", {
           title,
-          description,
         });
+        this.orders.push(data.data);
       } catch (error) {
         console.log(error);
       }

@@ -2,7 +2,6 @@
 <!-- eslint-disable prettier/prettier -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- eslint-disable vue/no-unused-vars -->
-
 <template>
   <section class="order-section position-relative">
     <button
@@ -13,6 +12,11 @@
       x
     </button>
     <h2 class="order-section__header">{{ store.currentTitle }}</h2>
+    <section @click='(useGeneralStore().ShowModalAddProduct = true)' class="order-section__add-product">
+      <button class="order-section__add-product_button">+</button>
+      <span class="order-section__add-product_text">Add product</span>
+    </section>
+    <AddProductModalVue />
     <section
       class="order-section__item"
       v-for="order in currentOrder.products"
@@ -27,7 +31,7 @@
       ></div>
       <img
         class="order-section__item__img"
-        v-bind:src="'http://localhost:3000/img/'+order.photo"
+        v-bind:src="'http://localhost:3000/img/' + order.photo"
         alt=""
       />
       <div class="order-section__item__title-wrapper">
@@ -48,11 +52,37 @@
       </button>
     </section>
   </section>
+  <Teleport to="body">
+    <AddModalOrder
+      :show="useGeneralStore().ShowModalAddOrder"
+      @close="useGeneralStore().ShowModalAddOrder = false"
+    >
+    </AddModalOrder>
+
+    <AddProductModal
+      :show="useGeneralStore().ShowModalAddProduct"
+      @close="useGeneralStore().ShowModalAddProduct = false"
+    >
+    </AddProductModal>
+  </Teleport>
 </template>
+
+<script>
+import AddModalOrder from "@/components/AddOrderModal.vue";
+import AddProductModal from "@/components/AddProductModal.vue";
+
+export default {
+  components: {
+    AddModalOrder,
+    AddProductModal,
+  },
+};
+</script>
 
 <script setup>
 import { computed } from "vue";
 import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
 
 const store = useOrderStore();
 
@@ -92,6 +122,62 @@ function isAvailable(status) {
   background-color: white;
   padding: 10px 0;
   height: fit-content;
+
+  &__add-product {
+    display: flex;
+    align-items: center;
+    padding: 0 0 10px 25px;
+    gap: 5px;
+    cursor: pointer;
+
+    &_button {
+      border-radius: 50%;
+      background: #8bc34a;
+      border: none;
+      color: white;
+      font-weight: 300;
+      height: 15px;
+      width: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      transition-duration: 0.3s;
+
+      &:hover {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      }
+
+      &:active {
+        box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+      }
+    }
+
+    &_text {
+      position: relative;
+      font-size: 10px;
+      font-weight: 300;
+      color: #8bc34a;
+      transition-duration: 0.3s;
+
+      &::after {
+        position: absolute;
+        display: flex;
+        content: "";
+        height: 1px;
+        text-decoration: solid;
+        background-color: #8bc34a;
+        width: 0;
+        transition: width 0.3s;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+    }
+  }
 
   &__btn-close {
     width: 25px;

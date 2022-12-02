@@ -44,6 +44,11 @@ const navLinks = {
     margin: 40px;
     border-radius: 100%;
     height: 80px;
+    box-shadow: 1px 9px 12px -8px rgba(124, 122, 122, 0.456);
+    background-position: center;
+    background-image: url(https://www.dzo.com.ua/images/catalog/products/e3d29c0bff25670609e62ec55206088aceaeb9eb.png);
+    background-color: none;
+    background-size: cover;
   }
 }
 </style>

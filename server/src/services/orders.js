@@ -8,19 +8,9 @@ export function getById(orderId) {
   return Orders.findByPk(orderId);
 }
 
-// export function createOrder(name) {
-//   const id = Number(generateUniqueId({
-//     length: 8,
-//     useLetters: false,
-//   }));
-
-//   return Orders.create({
-//     id, name,
-//   });
-// }
-
-export function createOrder(title, description) {
+export function createOrder(title) {
   const date = new Date();
+  const description = "description";
 
   return Orders.create({
     title, description, date,

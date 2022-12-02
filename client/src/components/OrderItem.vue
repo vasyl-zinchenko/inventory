@@ -4,15 +4,13 @@
 <!-- eslint-disable vue/no-unused-vars -->
 <script>
 import Modal from "@/components/ModalComponent.vue";
+import AddModalOrder from "@/components/AddOrderModal.vue"
 
 export default {
   components: {
     Modal,
-  },
-  data() {
-    return {
-      showModal: false,
-    };
+    // eslint-disable-next-line vue/no-unused-components
+    AddModalOrder,
   },
 };
 </script>
@@ -61,7 +59,7 @@ export default {
       <span class="order-section-item__value-end">250 000.50</span>
       <span class="order-section-item__value-end-smbl">UAH</span>
     </div>
-    <!-- <button @click='store.deleteOrder(order.id); removeOrder(order.id)' class="btn btn-light btn-sm">
+    <!-- <button @click='store.deleteOrderFromServer(order.id); removeOrder(order.id)' class="btn btn-light btn-sm">
       <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
     </button> -->
 
@@ -69,25 +67,40 @@ export default {
       id="show-modal"
       @click="
         currentOrder(order.id, order, '');
-        showModal = true;
+        generalStore.showModal = true;
       "
       class="btn btn-light btn-sm"
     >
       <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
     </button>
   </section>
-
+  <!--ADD MODAL-->
   <Teleport to="body">
-    <modal :show="showModal" @close="showModal = false">
+    <AddModalOrder
+      :show="generalStore.ShowModalAddOrder"
+      @close="generalStore.ShowModalAddOrder = false"
+    >
+    </AddModalOrder>
+  </Teleport>
+
+  <!--DELETE ORDER MOFAL-->
+  <Teleport to="body">
+    <modal
+      :show="generalStore.showModal"
+      @close="generalStore.showModal = false"
+    >
       <template #footer>
-        <button class="modal-close-link" @click="showModal = false">
+        <button
+          class="modal-close-link"
+          @click="generalStore.showModal = false"
+        >
           CANCEL
         </button>
         <button
           @click="
-            // store.deleteOrder(useOrderStore().currentId);
+            // store.deleteOrderFromServer(useOrderStore().currentId);
             removeOrder(useOrderStore().currentId);
-            showModal = false;
+            generalStore.showModal = false;
           "
           type="button"
           class="modal-delete-button"
@@ -111,8 +124,28 @@ import { useGeneralStore } from "@/store/general";
 
 const store = useOrderStore();
 const productSrore = useProductStore();
+const generalStore = useGeneralStore();
 
-// eslint-disable-next-line no-unused-vars
+// const id = ref(50);
+
+// function addOder(title, description, id, date) {
+//   store.orders.push(title);
+// }
+
+// function onSubmit() {
+//   const NewOrder = {
+//     title,
+//     // description: "test",
+//     // id: id.value++,
+//   };
+//   store.postOrder(NewOrder);
+// }
+//РОБОЧА ЗНИЗУ
+// store.title = store.title.replace(/^(\s)*/g, "");
+// function onSubmit() {
+//   return store.postOrder(store.title);
+// }
+
 const orders = computed(() => {
   return store.orders;
 });
@@ -158,6 +191,7 @@ function formatDate(date) {
 onMounted(() => {
   store.fetchOrders();
   productSrore.fetchProducts();
+  // store.postOrder();
 });
 </script>
 

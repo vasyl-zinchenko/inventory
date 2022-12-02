@@ -28,14 +28,13 @@
         product.title
       }}</span>
       <span class="product-section-item__title-wrapper_serial-number"
-        >SN-{{ product.serialNumber }}</span
-      >
+        >SN-{{ product.serialNumber }}</span>
     </div>
 
     <span
       :class="{ isAvailable: isAvailable(product.isNew) === 'available' }"
       class="product-section-item__status"
-      >{{ isAvailable(product.isNew) }}</span
+      >{{ isAvailable(product.isNew) || "-" }}</span
     >
 
     <div class="product-section-item__title-wrapper">
@@ -60,15 +59,29 @@
         >{{ product.price[1].value }} {{ product.price[1].symbol }}</span
       >
     </div>
-    <div style="display:flex; justify-content:start; width:100%">    <a
+    <div style="display:flex; justify-content:start; width:100%">
+      <a
+      v-if='product.order.title' 
       href="#"
       @click="
         currentOrder(order.id, order, order.title);
         useOrderStore().isActive = true;
       "
       class="product-section-item__title_order"
-      >{{ orderTitle(product.order.title) }}</a
-    ></div>
+      >{{ orderTitle(product.order.title) }}
+    </a>
+
+    <a
+      v-else
+      href="#"
+      @click="
+        currentOrder(order.id, order);
+        useOrderStore().isActive = true;
+      "
+      class="product-section-item__title_order"
+      > -
+    </a>
+  </div>
     <div>
       <!-- <span class="product-section-item__value-end">250 000.50</span> -->
       <div class="product-section-item__date-from">
@@ -115,16 +128,7 @@ useProductStore().isActive = useProductStore().currentId !== 0 ? true : false;
 //   store.currentTitle = title;
 // }
 
-store.selectedProducts = computed(() => {
-  return products.value.filter(({ type }) => {
-    switch (useGeneralStore().filterValue) {
-      case "Monitors":
-        return products.value.filter((product) => product.type === "Monitors");
-    }
-  });
-});
-
-const productsWithOrder = computed(() => {
+store.productsWithOrder = computed(() => {
   return products.value.map((product) => ({
     ...product,
     order: orders.value.find((order) => order.id === product.order),
@@ -137,34 +141,12 @@ const currentOrder = computed(() => {
   );
 });
 
-// store.filteredProducts = computed(() => {
-//   return productsWithOrder.value.filter((product) =>
-//     product.title
-//       .toLowerCase()
-//       .includes(useGeneralStore().searchQuery.toLowerCase())
-//   );
-// });
-
-// const filteredTodos = todos
-//     .filter(({ completed, title }) => {
-//       switch (filterBy) {
-//         case SortType.ACTIVE:
-//           return !completed && checkQuery(query, title);
-
-//         case SortType.COMPLETED:
-//           return completed && checkQuery(query, title);
-
-//         default:
-//           return checkQuery(query, title);
-//       }
-//     });
-
 function checkQuery(query, content) {
   return content.toLowerCase().includes(query.toLowerCase());
 }
 
 store.filteredProducts = computed(() => {
-  return productsWithOrder.value.filter(({ type, title }) => {
+  return store.productsWithOrder.filter(({ type, title }) => {
     switch (useGeneralStore().filterValue) {
       case "Laptops":
         return (
@@ -247,6 +229,7 @@ onMounted(() => {
   grid-template-columns: 2% 0.5fr 2fr 1fr 0.65fr 1fr 1fr 1fr 1fr 0.5fr;
   place-items: center;
   min-width: 895px;
+  min-height: 73px;
   border-radius: 5px;
   border: rgb(223, 220, 220) 1px solid;
   font-size: 12px;

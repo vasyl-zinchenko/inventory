@@ -20,9 +20,9 @@ export const getOne = async(req, res) => {
 };
 
 export const add = async(req, res) => {
-  const { title, description } = req.body;
+  const { title } = req.body;
 
-  if (!title || !description) {
+  if (!title) {
     res.sendStatus(400);
 
     return;
@@ -31,7 +31,6 @@ export const add = async(req, res) => {
   const newOrder = await orderService
     .createOrder(
       title,
-      description,
     );
 
   res.statusCode = 201;

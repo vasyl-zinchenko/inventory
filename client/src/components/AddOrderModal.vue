@@ -9,15 +9,20 @@ export default {
 <script setup>
 import { computed } from "vue";
 import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
 
+const generalStore = useGeneralStore();
 const store = useOrderStore();
+// const showAddOrderModal = true;
 
+// eslint-disable-next-line no-unused-vars
 const currentOrder = computed(() => {
   return store.currentOrder;
 });
 
-function isAvailable(status) {
-  return status === 0 ? "under repair" : "available";
+function onSubmit() {
+  store.postOrder(store.title);
+  useOrderStore().title = "";
 }
 </script>
 
@@ -27,9 +32,7 @@ function isAvailable(status) {
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header"
-              >Are you sure you want to delete this order?</slot
-            >
+            <slot name="header">Name the new order</slot>
             <button
               @click="$emit('close')"
               class="order-section__btn-close"
@@ -38,40 +41,31 @@ function isAvailable(status) {
               x
             </button>
           </div>
-          <div class="modal-body">
-            <section
-              class="order-section__item"
-              v-for="order in currentOrder.products"
-              :key="order.id"
-            >
-              <div
-                :class="{
-                  isAvailableSmbl: isAvailable(order.isNew) === 'available',
-                  isNotAvailableSmbl:
-                    isAvailable(order.isNew) === 'under repair',
-                }"
-                class="order-section__item_available"
-              ></div>
-
-              <img
-                class="order-section__item__img"
-                v-bind:src="'http://localhost:3000/img/' + order.photo"
-                alt=""
+          <form
+            @submit.prevent="onSubmit"
+            id="add-order"
+            class="add-order-form"
+          >
+            <slot name="body" class="modal-body">
+              <input
+                class="add-order-form__input"
+                v-model="store.title"
+                autofocus
+                placeholder="Add new order"
               />
-              <div class="order-section__item__title-wrapper">
-                <span class="order-section__item__title-wrapper_title">{{
-                  order.title
-                }}</span>
-                <span class="order-section__item__title-wrapper_serial-number"
-                  >SN-{{ order.serialNumber }}</span
-                >
-              </div>
-            </section>
-          </div>
+            </slot>
 
-          <div class="modal-component-footer">
-            <slot name="footer"> </slot>
-          </div>
+            <div class="modal-component-footer">
+              <slot name="footer">
+                <button class="modal-add-button">ADD</button>
+
+                <div
+                  class="modal-close-link"
+                  @click="generalStore.ShowModalAddOrder = false"
+                ></div>
+              </slot>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -79,6 +73,52 @@ function isAvailable(status) {
 </template>
 
 <style lang="scss" scoped>
+.modal-close-link {
+  cursor: pointer;
+  color: white;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  transition-duration: 0.3s;
+  background: none;
+  border: none;
+  margin-right: 20px;
+
+  &::after {
+    content: "CANCEL";
+  }
+
+  &:hover {
+    text-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
+  }
+
+  &:active {
+    text-shadow: 2px 1px 10px rgba(150, 150, 150, 1);
+  }
+}
+
+.modal-add-button {
+  color: #208228;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 30px;
+  margin: 20px;
+  transition-duration: 0.3s;
+  box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+
+  &:hover {
+    box-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
+  }
+
+  &:active {
+    box-shadow: 2px 1px 10px rgba(150, 150, 150, 1);
+    transform: translateY(-1px);
+  }
+}
+
 .isAvailableSmbl {
   background-color: #cddc39;
 }
@@ -179,6 +219,15 @@ function isAvailable(status) {
 .header {
   color: black;
 }
+
+.add-order-form {
+  display: flex;
+  flex-direction: column;
+
+  &__input {
+    margin: 0 20px 15px;
+  }
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -211,16 +260,19 @@ function isAvailable(status) {
   border-radius: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+  position: absolute;
+  top: 200px;
+  left: 200px;
 }
 
 .modal-header {
   position: relative;
   padding: 20px;
+  font-size: 20px;
 
   & h3 {
     margin-top: 0;
     padding: 20px;
-    font-size: 16px;
     color: black;
   }
 }

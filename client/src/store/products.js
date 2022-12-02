@@ -8,6 +8,16 @@ export const useProductStore = defineStore("products", {
     searchQuery: "",
     filteredProducts: [],
     selectedProducts: [],
+    productsWithOrder: [],
+    newProduct: {
+      title: "test",
+      serialNumber: "test",
+      isNew: 0,
+      photo: "test",
+      type: "test",
+      specification: "test",
+      order: 1,
+    },
   }),
   actions: {
     async fetchProducts() {
@@ -25,12 +35,26 @@ export const useProductStore = defineStore("products", {
         console.log(error);
       }
     },
-    async postProducts(title, description) {
+    async postProduct(
+      title,
+      isNew,
+      serialNumber,
+      photo,
+      type,
+      specification,
+      order
+    ) {
       try {
-        return await axios.post("/products/", {
+        const data = await axios.post("/products/", {
           title,
-          description,
+          isNew,
+          serialNumber,
+          photo,
+          type,
+          specification,
+          order,
         });
+        this.products.push(data.data);
       } catch (error) {
         console.log(error);
       }
