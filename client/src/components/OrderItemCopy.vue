@@ -65,6 +65,7 @@ function currentOrder(id, order, title) {
   store.currentId = id;
   store.currentOrder = order;
   store.currentTitle = title;
+  useProductStore().newProduct.order = id;
 }
 
 store.fullOrders = computed(() => {

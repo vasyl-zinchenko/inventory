@@ -7,18 +7,11 @@ export default {
 </script>
 
 <script setup>
-import { computed } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 
 const generalStore = useGeneralStore();
 const store = useOrderStore();
-// const showAddOrderModal = true;
-
-// eslint-disable-next-line no-unused-vars
-const currentOrder = computed(() => {
-  return store.currentOrder;
-});
 
 function onSubmit() {
   store.postOrder(store.title);

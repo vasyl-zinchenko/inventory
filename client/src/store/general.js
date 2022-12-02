@@ -7,6 +7,6 @@ export const useGeneralStore = defineStore("general", {
     filterValue: "All",
     showModal: false,
     ShowModalAddOrder: false,
-    ShowModalAddProduct: true,
+    ShowModalAddProduct: false,
   }),
 });

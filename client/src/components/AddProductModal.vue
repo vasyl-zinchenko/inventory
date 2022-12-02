@@ -22,7 +22,7 @@ const currentOrder = computed(() => {
   return store.currentOrder;
 });
 
-storeProduct.newProduct.order = currentOrder.value.id;
+storeProduct.newProduct.order = useOrderStore().currentId;
 
 function onSubmit() {
   storeProduct.postProduct(
@@ -32,7 +32,7 @@ function onSubmit() {
     storeProduct.newProduct.photo,
     storeProduct.newProduct.type,
     storeProduct.newProduct.specification,
-    (storeProduct.newProduct.order = currentOrder.value.id)
+    storeProduct.newProduct.order
   );
   storeProduct.newProduct.title = "";
   storeProduct.newProduct.serialNumber = "";
@@ -121,6 +121,7 @@ function onSubmit() {
               <label class="form-field">
                 Order
                 <input
+                  disabled
                   class="add-order-form__input"
                   v-model="storeProduct.newProduct.order"
                   autofocus
