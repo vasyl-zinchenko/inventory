@@ -90,9 +90,13 @@
     </div>
           <!-- @click="store.deleteProduct(product.id); removeProduct(product.id);" -->
     <button
+      @click="currentProduct(product.id, product);
+      store.deleteProductsFromServer(store.currentProductId)
+      removeProduct(product.id)"
       class="btn btn-light btn-sm"
     >
-      <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
+      <i class="bi bi-trash3-fill" style="font-size: 12px" 
+></i>
     </button>
   </section>
 </template>
@@ -122,11 +126,10 @@ const products = computed(() => {
 
 useProductStore().isActive = useProductStore().currentId !== 0 ? true : false;
 
-// function currentProduct(id, product, title) {
-//   store.currentId = id;
-//   store.currentProduct = product;
-//   store.currentTitle = title;
-// }
+function currentProduct(id, product) {
+  store.currentProductId = id;
+  store.currentProduct = product;
+}
 
 store.productsWithOrder = computed(() => {
   return products.value.map((product) => ({

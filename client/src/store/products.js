@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useOrderStore } from "./order";
 axios.defaults.baseURL = "http://localhost:3000";
 
 export const useProductStore = defineStore("products", {
@@ -9,6 +10,8 @@ export const useProductStore = defineStore("products", {
     filteredProducts: [],
     selectedProducts: [],
     productsWithOrder: [],
+    currentProductId: 0,
+    currentProduct: [],
     newProduct: {
       title: "test",
       serialNumber: "test",
@@ -28,13 +31,18 @@ export const useProductStore = defineStore("products", {
         console.log(error);
       }
     },
-    async deleteProducts(id) {
+
+    async deleteProductsFromServer(id) {
       try {
-        return await axios.delete("/products/" + id);
+        await axios.delete("/products/" + id);
+        useOrderStore().filteredOrders.products.filter(
+          (product) => product.id !== id
+        );
       } catch (error) {
         console.log(error);
       }
     },
+
     async postProduct(
       title,
       isNew,
@@ -55,6 +63,7 @@ export const useProductStore = defineStore("products", {
           order,
         });
         this.products.push(data.data);
+        useOrderStore().currentOrder.products.push(data.data);
       } catch (error) {
         console.log(error);
       }

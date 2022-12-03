@@ -18,11 +18,6 @@ export const useOrderStore = defineStore("orders", {
     title: "",
     isLoading: false,
   }),
-  getters: {
-    addOrder(state) {
-      return state.title;
-    },
-  },
 
   actions: {
     async fetchOrders() {

@@ -11,15 +11,21 @@
     >
       x
     </button>
-    <h2 class="order-section__header">{{ store.currentTitle }}</h2>
-    <section @click='(useGeneralStore().ShowModalAddProduct = true)' class="order-section__add-product">
+    <h2 class="order-section__header">
+      {{ store.currentTitle }}
+    </h2>
+    <section
+      @click="useGeneralStore().ShowModalAddProduct = true"
+      class="order-section__add-product"
+    >
       <button class="order-section__add-product_button">+</button>
+      {{ useOrderStore().currentOrder.products.length }}
       <span class="order-section__add-product_text">Add product</span>
     </section>
     <AddProductModalVue />
     <section
       class="order-section__item"
-      v-for="order in currentOrder.products"
+      v-for="order in useOrderStore().currentOrder.products"
       :key="order.id"
     >
       <div
@@ -47,7 +53,18 @@
         class="order-section__item__status"
         >{{ isAvailable(order.isNew) }}</span
       >
-      <button class="btn btn-sm" style="border: none">
+      <button
+        class="btn btn-sm"
+        style="border: none"
+        @click="
+          (useGeneralStore().OrdersProductsKey += 1),
+            currentProduct(order.id, order),
+            removeProduct(order.id),
+            useProductStore().deleteProductsFromServer(
+              useProductStore().currentProductId
+            )
+        "
+      >
         <i class="btn-delete bi bi-trash3-fill" style="font-size: 11px"></i>
       </button>
     </section>
@@ -80,16 +97,24 @@ export default {
 </script>
 
 <script setup>
-import { computed } from "vue";
+// eslint-disable-next-line no-unused-vars
+import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
+import { useProductStore } from "@/store/products";
 
 const store = useOrderStore();
-
 // eslint-disable-next-line no-unused-vars
-const currentOrder = computed(() => {
-  return store.currentOrder;
-});
+function removeProduct(id) {
+  store.currentOrder.products = store.currentOrder.products.filter(
+    (product) => product.id !== id
+  );
+}
+
+function currentProduct(id, product) {
+  useProductStore().currentProductId = id;
+  useProductStore().currentProduct = product;
+}
 
 function isAvailable(status) {
   return status === 0 ? "under repair" : "available";

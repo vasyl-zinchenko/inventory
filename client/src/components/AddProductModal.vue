@@ -7,20 +7,23 @@ export default {
 </script>
 
 <script setup>
-import { computed } from "vue";
+// eslint-disable-next-line no-unused-vars
+import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 // eslint-disable-next-line no-unused-vars
 import { useProductStore } from "@/store/products";
 
 const generalStore = useGeneralStore();
-const store = useOrderStore();
 const storeProduct = useProductStore();
 
-// eslint-disable-next-line no-unused-vars
-const currentOrder = computed(() => {
-  return store.currentOrder;
+onUnmounted(() => {
+  useOrderStore().orders;
+  useOrderStore().fullOrders;
+  useProductStore().fetchProducts();
 });
+
+// eslint-disable-next-line no-unused-vars
 
 storeProduct.newProduct.order = useOrderStore().currentId;
 
@@ -34,11 +37,11 @@ function onSubmit() {
     storeProduct.newProduct.specification,
     storeProduct.newProduct.order
   );
-  storeProduct.newProduct.title = "";
-  storeProduct.newProduct.serialNumber = "";
-  storeProduct.newProduct.photo = "";
-  storeProduct.newProduct.type = "";
-  storeProduct.newProduct.specification = "";
+  // storeProduct.newProduct.title = "";
+  // storeProduct.newProduct.serialNumber = "";
+  // storeProduct.newProduct.photo = "";
+  // storeProduct.newProduct.type = "";
+  // storeProduct.newProduct.specification = "";
 }
 </script>
 

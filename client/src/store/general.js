@@ -8,5 +8,7 @@ export const useGeneralStore = defineStore("general", {
     showModal: false,
     ShowModalAddOrder: false,
     ShowModalAddProduct: false,
+    OrdersProductsKey: 0,
+    currentProductsList: [],
   }),
 });

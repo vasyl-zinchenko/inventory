@@ -14,15 +14,14 @@
       </section>
       <section class="order-section__products-of-orders">
         <OrdersList />
-        <OrdersProducts v-if="useOrderStore().currentTitle.length > 0" />
+        <OrdersProducts
+          v-if="useOrderStore().currentTitle.length > 0"
+          :key="useGeneralStore().OrdersProductsKey"
+        />
       </section>
     </section>
   </section>
 </template>
-
-<script setup>
-import { useOrderStore } from "../store/order";
-</script>
 
 <script>
 import { useGeneralStore } from "@/store/general";
@@ -35,6 +34,10 @@ export default {
     OrdersProducts,
   },
 };
+</script>
+
+<script setup>
+import { useOrderStore } from "../store/order";
 </script>
 
 <style lang="scss">

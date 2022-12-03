@@ -12,13 +12,14 @@
       <OrderItem />
     </section>
     <section class="order-list" v-else>
-      <OrderItemCopy />
+      <OrderItemCopy :key="useGeneralStore().OrdersProductsKey" />
     </section>
   </div>
 </template>
 
 <script setup>
 import OrderItem from "@/components/OrderItem.vue";
+import { useGeneralStore } from "@/store/general";
 import { computed } from "vue";
 import { useOrderStore } from "../store/order";
 import OrderItemCopy from "./OrderItemCopy.vue";

@@ -20,7 +20,7 @@
         class="btn btn-light btn-sm btn-rounded btn-floating"
         data-mdb-ripple-color="dark"
       >
-        <i class="bi bi-list-ul" style="font-size: 15px"></i>
+        <a style="color:#000" href="#"><i class="bi bi-list-ul" style="font-size: 15px"></i></a>
       </button>
       <div class="order-section-item__count">
         <div class="order-section-item__count_number">
@@ -50,7 +50,8 @@
 
 <script setup>
 import { useProductStore } from "@/store/products";
-import { onMounted, computed } from "vue";
+// eslint-disable-next-line no-unused-vars
+import { onMounted, computed, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 
 const store = useOrderStore();
@@ -90,9 +91,20 @@ function formatDate(date) {
   return date.slice(0, 10).replace(/-/g, " / ");
 }
 
+// onUnmounted(() => {
+//   console.log("Close" + store.currentOrder.products.length);
+// });
+
+// onUpdated(() => {
+//   console.log("Update" + store.currentOrder.products.length);
+//   store.orders;
+//   store.fullOrders;
+// });
+
 onMounted(() => {
   store.fetchOrders();
   productSrore.fetchProducts();
+  store.fullOrders;
 });
 </script>
 

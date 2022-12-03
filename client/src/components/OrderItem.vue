@@ -22,14 +22,15 @@ export default {
     :key="order.id"
   >
     <div class="order-section-item__title-wrapper">
-      <a
-        href="#"
+      <router-link
+        :to="{ params: { id: order.id } }"
         @click="
           currentOrder(order.id, order, order.title);
+          useGeneralStore().currentProductsList.push(order.products);
           useOrderStore().isActive = true;
         "
         class="order-section-item__title"
-        >{{ order.title }}</a
+        >{{ order.title }}</router-link
       >
     </div>
     <button
@@ -125,20 +126,6 @@ const store = useOrderStore();
 const productSrore = useProductStore();
 const generalStore = useGeneralStore();
 
-// const id = ref(50);
-
-// function addOder(title, description, id, date) {
-//   store.orders.push(title);
-// }
-
-// function onSubmit() {
-//   const NewOrder = {
-//     title,
-//     // description: "test",
-//     // id: id.value++,
-//   };
-//   store.postOrder(NewOrder);
-// }
 //РОБОЧА ЗНИЗУ
 // store.title = store.title.replace(/^(\s)*/g, "");
 // function onSubmit() {
