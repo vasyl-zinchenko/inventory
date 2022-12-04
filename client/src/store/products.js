@@ -12,6 +12,7 @@ export const useProductStore = defineStore("products", {
     productsWithOrder: [],
     currentProductId: 0,
     currentProduct: [],
+    currentProducts: [],
     newProduct: {
       title: "test",
       serialNumber: "test",

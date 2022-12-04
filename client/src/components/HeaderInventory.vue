@@ -1,50 +1,64 @@
 <template>
   <header class="header">
-    <div class="header__logo-search-block">
-      <div class="header__logo">
-        <img class="header__logo-img" src="../assets/logo.png" />
+    <section class="header__container">
+      <div class="header__logo-search-block">
+        <div class="header__logo">
+          <img class="header__logo-img" src="../assets/logo.png" />
+        </div>
+        <input
+          class="form-control mr-sm-3 h-25 form-control-sm"
+          v-model="store.searchQuery"
+          name="query"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
       </div>
-      <input
-        class="form-control mr-sm-3 h-25 form-control-sm"
-        v-model="store.searchQuery"
-        name="query"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-    </div>
-
-    <div class="header__date">22 November</div>
+      <ClockDate />
+    </section>
   </header>
 </template>
 
+<script>
+export default {
+  components: {
+    ClockDate,
+  },
+  methods: {},
+};
+</script>
+
 <script setup>
 import { useGeneralStore } from "../store/general";
+import ClockDate from "@/components/ClockDate";
 const store = useGeneralStore();
 </script>
 
 <style lang="scss" scoped>
 .header {
   grid-area: header;
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 10px 150px;
-  height: 80px;
-  justify-content: space-between;
   background-color: white;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 
-  @media (max-width: 900px) {
-    padding: 10px 50px 0 150px;
-  }
+  &__container {
+    max-width: 1115px;
+    padding: 35px 0 35px 150px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
 
-  @media (max-width: 768px) {
-    padding: 10px 0 0 150px;
-  }
+    @media (max-width: 900px) {
+      padding: 10px 0 10px 150px;
+    }
 
-  @media (max-width: 425px) {
-    padding: 10px;
+    @media (max-width: 768px) {
+      padding: 10px 0 0 150px;
+    }
+
+    @media (max-width: 425px) {
+      padding: 10px;
+    }
   }
 
   &__logo-img {
@@ -64,19 +78,6 @@ const store = useGeneralStore();
 
   &__input {
     height: 20px;
-  }
-
-  &__date {
-    margin-right: 100px;
-
-    @media (max-width: 768px) {
-      margin-right: 50px;
-      font-size: 10px;
-    }
-
-    @media (max-width: 425px) {
-      margin-right: 20px;
-    }
   }
 }
 </style>

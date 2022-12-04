@@ -2,15 +2,30 @@
 <template>
   <nav class="main__menu">
     <section class="user-section">
-      <img class ="user-section__picture" src="../assets/user.jpg" alt="user picture">
+      <img
+        class="user-section__picture"
+        src="../assets/user.jpg"
+        alt="user picture"
+      />
     </section>
-    <router-link @click="useGeneralStore().searchQuery =''" to="/orders">{{navLinks.orders}}</router-link>
-    <router-link @click="useGeneralStore().searchQuery =''" to="/products">{{navLinks.products}}</router-link>
+    <router-link
+      @click="
+        (useGeneralStore().searchQuery = ''),
+          (useOrderStore().currentTitle = '')
+      "
+      to="/orders"
+      >{{ navLinks.orders }}</router-link
+    >
+    <router-link 
+      @click="useGeneralStore().searchQuery = ''" 
+      to="/products">{{
+      navLinks.products
+    }}</router-link>
   </nav>
-  
 </template>
 <script setup>
 import { useGeneralStore } from "../store/general";
+import { useOrderStore } from "../store/order";
 
 const navLinks = {
   orders: "ORDERS",

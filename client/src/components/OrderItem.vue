@@ -67,6 +67,7 @@ export default {
       id="show-modal"
       @click="
         currentOrder(order.id, order, '');
+        currentProducts(order.products);
         generalStore.showModal = true;
       "
       class="btn btn-light btn-sm"
@@ -98,8 +99,10 @@ export default {
         </button>
         <button
           @click="
-            // store.deleteOrderFromServer(useOrderStore().currentId);
+            deleteCurrentProducts(useOrderStore().currentOrder.products);
+            store.deleteOrderFromServer(useOrderStore().currentId);
             removeOrder(useOrderStore().currentId);
+            forceUpadateComponent();
             generalStore.showModal = false;
           "
           type="button"
@@ -126,6 +129,12 @@ const store = useOrderStore();
 const productSrore = useProductStore();
 const generalStore = useGeneralStore();
 
+function forceUpadateComponent() {
+  setTimeout(() => {
+    useGeneralStore().OrdersProductsKey += 1;
+  }, 500);
+}
+
 //РОБОЧА ЗНИЗУ
 // store.title = store.title.replace(/^(\s)*/g, "");
 // function onSubmit() {
@@ -143,6 +152,22 @@ function currentOrder(id, order, title) {
   store.currentOrder = order;
   store.currentTitle = title;
 }
+
+function currentProducts(products) {
+  productSrore.currentProducts = products;
+}
+
+const deleteCurrentProducts = async () => {
+  try {
+    await Promise.all(
+      productSrore.currentProducts.map(({ id }) =>
+        useProductStore().deleteProductsFromServer(id)
+      )
+    );
+  } catch (error) {
+    console.log("Unable to delete products");
+  }
+};
 
 // function checkIdForModal(id, order) {
 //   store.currentModalId = id;

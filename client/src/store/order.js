@@ -28,7 +28,7 @@ export const useOrderStore = defineStore("orders", {
         console.log(error);
       }
     },
-    async deleteOrder(id) {
+    async deleteOrderFromServer(id) {
       try {
         return await axios.delete("/orders/" + id);
       } catch (error) {

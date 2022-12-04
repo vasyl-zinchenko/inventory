@@ -2,13 +2,14 @@
 <template>
   <div>
     <section class="product-list">
-      <ProductItem />
+      <ProductItem :key="useGeneralStore().OrdersProductsKey" />
     </section>
   </div>
 </template>
 
 <script setup>
 import ProductItem from "@/components/ProductItem.vue";
+import { useGeneralStore } from "@/store/general";
 </script>
 
 <script>

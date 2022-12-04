@@ -9,7 +9,7 @@
       class="order-list"
       v-if="useOrderStore().currentTitle.length === 0"
     >
-      <OrderItem />
+      <OrderItem :key="useGeneralStore().OrdersProductsKey" />
     </section>
     <section class="order-list" v-else>
       <OrderItemCopy :key="useGeneralStore().OrdersProductsKey" />
