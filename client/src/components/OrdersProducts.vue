@@ -38,7 +38,7 @@
 
       <img
         class="order-section__item__img"
-        v-bind:src="'http://localhost:3000/img/' + order.photo"
+        v-bind:src="useGeneralStore().baseImgUrl + order.photo"
         alt=""
       />
 
