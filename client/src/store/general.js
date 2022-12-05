@@ -11,7 +11,7 @@ export const useGeneralStore = defineStore("general", {
     OrdersProductsKey: 0,
     currentProductsList: [],
     isWarningMessageShown: true,
-    baseUrl: "https://inventory-app-nejd.onrender.com/",
-    baseImgUrl: "https://inventory-app-nejd.onrender.com/img/",
+    baseUrl: "http://localhost:3000/",
+    baseImgUrl: "http://localhost:3000/img/",
   }),
 });
