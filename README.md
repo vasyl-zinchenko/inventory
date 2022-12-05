@@ -48,7 +48,9 @@ Also:
 - Clone the forked repo be running
 - open the project
 - if cloud server render.com doesn't work, please replace
+
   https://inventory-app-nejd.onrender.com/ with http://localhost:3000/ in files:
+  
   /inventory/client/src/store/general.js
   /inventory/client/src/store/order.js
   /inventory/client/src/store/products.js
