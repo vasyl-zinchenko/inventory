@@ -3,7 +3,7 @@
 [DEMO LINK](https://vasylzinchenko.github.io/inventory/)
 ____________
 
-<p><img src="./redme_files/vue-mario.gif" alt="vue3" width="20" height="20"/> This was my first experience with Vue</p>
+<p><img src="https://imgur.com/qaMsGOf" alt="vue3" width="20" height="20"/> This was my first experience with Vue</p>
 <p>🏆 And also a new personal achievement</p>
 
 <img src="" alt="vue.js" width="300" height="300"/>
