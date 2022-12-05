@@ -60,7 +60,6 @@
     <div style="display: flex; justify-content: start; width: 100%">
       <a
         v-if="product.order.title"
-        href="#"
         @click="
           currentOrder(order.id, order, order.title);
           useOrderStore().isActive = true;
