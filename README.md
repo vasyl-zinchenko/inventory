@@ -19,3 +19,37 @@ Here you can create an order, as well as products for it. To demonstrate, I crea
 <img src="https://im4.ezgif.com/tmp/ezgif-4-bc430d5e-gif/download-png-638d8567b539e.png" alt="express.js" width="75" height="45"/>
 <img src="https://www.postgresql.org/media/img/about/press/elephant.png" alt="node.js" width="45" height="45"/>
 
+-----------
+Here you can:
+
+- Create an order
+
+<img src="https://im2.ezgif.com/tmp/ezgif-2-613b543270.gif">
+ 
+- Delete the order with products
+  
+<img src="https://im2.ezgif.com/tmp/ezgif-2-1ad92ff2f0.gif">
+
+- Create a product
+
+<img src="https://im2.ezgif.com/tmp/ezgif-2-7575bb2598.gif">
+  
+Also:
+
+- delete products
+- filter products
+- use seach bar
+- and check what time it is
+  
+-----
+  
+<h3>Try it Yourself</h3>
+
+- Clone the forked repo be running
+- open the project
+- enter: 
+1) npm run setup
+2) npm run server
+3) open new terminal and enter: npm run client
+4) follow the link: http://localhost:8080/inventory/
+
