@@ -51,11 +51,11 @@ Also:
 
   https://inventory-app-nejd.onrender.com/ with http://localhost:3000/ in files:
   
-  /inventory/client/src/store/general.js
-  /inventory/client/src/store/order.js
-  /inventory/client/src/store/products.js
+  - /inventory/client/src/store/general.js
+  - /inventory/client/src/store/order.js
+  - /inventory/client/src/store/products.js
 
-enter: 
+Then enter: 
   1) cd server
   2) npm i
   3) npm run dev
