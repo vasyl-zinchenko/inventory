@@ -24,15 +24,15 @@ Here you can:
 
 - Create an order
 
-<img src="https://im2.ezgif.com/tmp/ezgif-2-613b543270.gif">
+<img src="https://i.imgur.com/rcSQPdk.gif">
  
 - Delete the order with products
   
-<img src="https://im2.ezgif.com/tmp/ezgif-2-1ad92ff2f0.gif">
+<img src="https://i.imgur.com/WdHmJpB.gif">
 
 - Create a product
 
-<img src="https://im2.ezgif.com/tmp/ezgif-2-7575bb2598.gif">
+<img src="https://i.imgur.com/xI4bWef.gif">
   
 Also:
 
