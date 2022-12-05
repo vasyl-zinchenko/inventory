@@ -59,8 +59,7 @@ enter:
   3) npm run dev
 
 open a new terminal and enter: 
-  1) cd ..
-  2) cd client
-  3) npm run i
-  5) npm run serve
-  6) follow the link: http://localhost:8080/inventory/
+  1) cd client
+  2) npm run i
+  3) npm run serve
+  4) follow the link: http://localhost:8080/inventory/
