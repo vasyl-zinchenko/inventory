@@ -16,16 +16,15 @@
       to="/orders"
       >{{ navLinks.orders }}</router-link
     >
-    <router-link 
-      @click="useGeneralStore().searchQuery = ''" 
-      to="/products">{{
+    <router-link @click="useGeneralStore().searchQuery = ''" to="/products">{{
       navLinks.products
     }}</router-link>
   </nav>
 </template>
+
 <script setup>
-import { useGeneralStore } from "../store/general";
-import { useOrderStore } from "../store/order";
+import { useGeneralStore } from "@/store/general";
+import { useOrderStore } from "@/store/order";
 
 const navLinks = {
   orders: "ORDERS",
@@ -61,7 +60,7 @@ const navLinks = {
     height: 80px;
     box-shadow: 1px 9px 12px -8px rgba(124, 122, 122, 0.456);
     background-position: center;
-    background-image: url(https://www.dzo.com.ua/images/catalog/products/e3d29c0bff25670609e62ec55206088aceaeb9eb.png);
+    background-image: url(@/assets/background-user-img.png);
     background-color: none;
     background-size: cover;
   }

@@ -11,5 +11,7 @@ export const useGeneralStore = defineStore("general", {
     OrdersProductsKey: 0,
     currentProductsList: [],
     isWarningMessageShown: true,
+    baseUrl: "http://localhost:3000/",
+    baseImgUrl: "http://localhost:3000/img/",
   }),
 });

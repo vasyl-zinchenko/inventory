@@ -1,33 +1,157 @@
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-  components: {
-    WarningFormMessage,
-  },
-};
-</script>
+<template>
+  <Transition name="modal">
+    <div v-if="generalStore.ShowModalAddProduct" class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">Fill in all fields</slot>
+
+            <button
+              @click="$emit('close')"
+              class="order-section__btn-close"
+              aria-label="Close"
+            >
+              x
+            </button>
+          </div>
+          <form
+            @submit.prevent="onSubmit"
+            id="add-order"
+            class="add-order-form"
+          >
+            <slot name="body" class="modal-body">
+              <label class="form-field">
+                Title
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.title"
+                />
+              </label>
+
+              <label class="form-field">
+                Serial Number
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.serialNumber"
+                />
+              </label>
+
+              <section class="add-order-form__radio">
+                <label class="add-order-form__radio_label" for="one"
+                  >New
+                  <input
+                    type="radio"
+                    id="one"
+                    value="1"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
+
+                <label class="add-order-form__radio_label" for="two">
+                  Used
+                  <input
+                    style="margin-right: 5px"
+                    type="radio"
+                    id="two"
+                    value="0"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
+              </section>
+
+              <label class="form-field" style="display: none">
+                Photo
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.photo"
+                />
+              </label>
+
+              <label class="form-field">
+                Type
+                <select
+                  style="padding: 2px"
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.type"
+                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
+                >
+                  <option
+                    v-for="option in storeProduct.optionsTypeProduct.slice(1)"
+                    v-bind:value="option"
+                    v-bind:key="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="form-field">
+                Specification
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.specification"
+                />
+              </label>
+
+              <label class="form-field">
+                Order
+                <input
+                  disabled
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.order"
+                />
+              </label>
+            </slot>
+
+            <Transition name="warning">
+              <WarningFormMessage
+                v-if="
+                  !storeProduct.newProduct.title.trim() ||
+                  !storeProduct.newProduct.serialNumber.trim() ||
+                  !storeProduct.newProduct.photo.trim() ||
+                  !storeProduct.newProduct.type.trim() ||
+                  !storeProduct.newProduct.specification.trim()
+                "
+              />
+            </Transition>
+
+            <div class="modal-component-footer">
+              <slot name="footer">
+                <button
+                  @click="generalStore.ShowModalAddProduct = false"
+                  class="modal-add-button"
+                  :disabled="
+                    !storeProduct.newProduct.title.trim() ||
+                    !storeProduct.newProduct.serialNumber.trim() ||
+                    !storeProduct.newProduct.photo.trim() ||
+                    !storeProduct.newProduct.type.trim() ||
+                    !storeProduct.newProduct.specification.trim()
+                  "
+                >
+                  ADD
+                </button>
+
+                <div
+                  class="modal-close-link"
+                  @click="generalStore.ShowModalAddProduct = false"
+                ></div>
+              </slot>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </Transition>
+</template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 import WarningFormMessage from "@/components/WarningFormMessage.vue";
-// eslint-disable-next-line no-unused-vars
 import { useProductStore } from "@/store/products";
 
 const generalStore = useGeneralStore();
 const storeProduct = useProductStore();
-
-onUnmounted(() => {
-  useOrderStore().orders;
-  useOrderStore().fullOrders;
-  useProductStore().fetchProducts();
-});
-
-// eslint-disable-next-line no-unused-vars
 
 storeProduct.newProduct.order = useOrderStore().currentId;
 
@@ -65,172 +189,6 @@ function onSubmit() {
   storeProduct.newProduct.specification = "";
 }
 </script>
-
-<template>
-  <Transition name="modal">
-    <div v-if="show" class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header">Fill in all fields</slot>
-
-            <button
-              @click="$emit('close')"
-              class="order-section__btn-close"
-              aria-label="Close"
-            >
-              x
-            </button>
-          </div>
-          <form
-            @submit.prevent="onSubmit"
-            id="add-order"
-            class="add-order-form"
-          >
-            <slot name="body" class="modal-body">
-              <label class="form-field">
-                Title
-                <input
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.title"
-                  autofocus
-                />
-              </label>
-
-              <label class="form-field">
-                Serial Number
-                <input
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.serialNumber"
-                  autofocus
-                />
-              </label>
-
-              <!-- <label class="form-field">
-                New
-                <select
-                  style="padding: 2px"
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.isNew"
-                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
-                >
-                  <option
-                    v-for="option in storeProduct.isNew"
-                    v-bind:value="option"
-                    v-bind:key="option"
-                  >
-                    {{ option }}
-                  </option>
-                </select>
-              </label> -->
-              <section class="add-order-form__radio">
-                <label class="add-order-form__radio_label" for="one"
-                  >New
-                  <input
-                    type="radio"
-                    id="one"
-                    value="1"
-                    v-model="storeProduct.newProduct.isNew"
-                  />
-                </label>
-
-                <label class="add-order-form__radio_label" for="two"
-                  >Used
-                  <input
-                    style="margin-right: 5px"
-                    type="radio"
-                    id="two"
-                    value="0"
-                    v-model="storeProduct.newProduct.isNew"
-                  />
-                </label>
-              </section>
-
-              <label class="form-field" style="display: none">
-                Photo
-                <input
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.photo"
-                  autofocus
-                />
-              </label>
-
-              <label class="form-field">
-                Type
-                <select
-                  style="padding: 2px"
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.type"
-                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
-                >
-                  <option
-                    v-for="option in storeProduct.optionsTypeProduct.slice(1)"
-                    v-bind:value="option"
-                    v-bind:key="option"
-                  >
-                    {{ option }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="form-field">
-                Specification
-                <input
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.specification"
-                  autofocus
-                />
-              </label>
-
-              <label class="form-field">
-                Order
-                <input
-                  disabled
-                  class="add-order-form__input"
-                  v-model="storeProduct.newProduct.order"
-                  autofocus
-                />
-              </label>
-            </slot>
-            <Transition name="warning">
-              <WarningFormMessage
-                v-if="
-                  !storeProduct.newProduct.title.trim() ||
-                  !storeProduct.newProduct.serialNumber.trim() ||
-                  !storeProduct.newProduct.photo.trim() ||
-                  !storeProduct.newProduct.type.trim() ||
-                  !storeProduct.newProduct.specification.trim()
-                "
-              />
-            </Transition>
-            <div class="modal-component-footer">
-              <slot name="footer">
-                <button
-                  @click="generalStore.ShowModalAddProduct = false"
-                  class="modal-add-button"
-                  :disabled="
-                    !storeProduct.newProduct.title.trim() ||
-                    !storeProduct.newProduct.serialNumber.trim() ||
-                    !storeProduct.newProduct.photo.trim() ||
-                    !storeProduct.newProduct.type.trim() ||
-                    !storeProduct.newProduct.specification.trim()
-                  "
-                >
-                  ADD
-                </button>
-
-                <div
-                  class="modal-close-link"
-                  @click="generalStore.ShowModalAddProduct = false"
-                ></div>
-              </slot>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </Transition>
-</template>
 
 <style lang="scss" scoped>
 .modal-close-link {

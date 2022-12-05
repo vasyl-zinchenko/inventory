@@ -1,7 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/require-v-for-key -->
-<!-- eslint-disable vue/no-unused-vars -->
 <template>
   <section class="order-section position-relative">
     <button
@@ -11,17 +7,22 @@
     >
       x
     </button>
+
     <h2 class="order-section__header">
       {{ store.currentTitle }}
     </h2>
+
     <section
       @click="useGeneralStore().ShowModalAddProduct = true"
       class="order-section__add-product"
     >
       <button class="order-section__add-product_button">+</button>
+
       <span class="order-section__add-product_text">Add product</span>
     </section>
+
     <AddProductModalVue />
+
     <section
       class="order-section__item"
       v-for="order in useOrderStore().currentOrder.products"
@@ -34,11 +35,13 @@
         }"
         class="order-section__item_available"
       ></div>
+
       <img
         class="order-section__item__img"
         v-bind:src="'http://localhost:3000/img/' + order.photo"
         alt=""
       />
+
       <div class="order-section__item__title-wrapper">
         <span class="order-section__item__title-wrapper_title">{{
           order.title
@@ -47,11 +50,13 @@
           >SN-{{ order.serialNumber }}</span
         >
       </div>
+
       <span
         :class="{ isAvailable: isAvailable(order.isNew) === 'available' }"
         class="order-section__item__status"
         >{{ isAvailable(order.isNew) }}</span
       >
+
       <button
         class="btn btn-sm"
         style="border: none"
@@ -68,6 +73,7 @@
       </button>
     </section>
   </section>
+
   <Teleport to="body">
     <AddModalOrder
       :show="useGeneralStore().ShowModalAddOrder"
@@ -96,14 +102,12 @@ export default {
 </script>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
-import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 import { useProductStore } from "@/store/products";
 
 const store = useOrderStore();
-// eslint-disable-next-line no-unused-vars
+
 function removeProduct(id) {
   store.currentOrder.products = store.currentOrder.products.filter(
     (product) => product.id !== id

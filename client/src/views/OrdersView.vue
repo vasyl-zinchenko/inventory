@@ -8,10 +8,12 @@
         >
           +
         </button>
+
         <h2 class="order-section__title-block_headline">
           Orders / {{ useOrderStore().filteredOrders.length }}
         </h2>
       </section>
+
       <section class="order-section__products-of-orders">
         <OrdersList />
         <OrdersProducts

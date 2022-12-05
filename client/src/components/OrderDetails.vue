@@ -12,7 +12,6 @@
   >
     <section
       class="order-section-item"
-      style="grid-template-columns: 4fr 1fr 1fr 2fr 2fr 1fr"
     >
       <button
         @click="currentOrder(order.id, order, order.title)"

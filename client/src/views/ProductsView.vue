@@ -5,7 +5,9 @@
         <h2 class="product-section__title-block_headline">
           Product / {{ useProductStore().filteredProducts.length }}
         </h2>
+
         <span style="font-size: 9px; padding: 3px 8px; color: grey">Type</span>
+
         <select
           v-model="storeGeneral.filterValue"
           style="width: 200px; height: 20px; font-size: 9px; padding: 3px 8px"
@@ -27,11 +29,11 @@
   </section>
 </template>
 
-<!-- eslint-disable no-unused-vars -->
 <script setup>
 import { useProductStore } from "@/store/products";
 import { useGeneralStore } from "@/store/general";
-import { onMounted, computed } from "vue";
+import ProductsList from "@/components/ProductsList.vue";
+import { onMounted } from "vue";
 
 const store = useProductStore();
 const storeGeneral = useGeneralStore();
@@ -39,16 +41,6 @@ const storeGeneral = useGeneralStore();
 onMounted(() => {
   store.fetchProducts();
 });
-</script>
-
-<script>
-import ProductsList from "@/components/ProductsList.vue";
-export default {
-  name: "productList",
-  components: {
-    ProductsList,
-  },
-};
 </script>
 
 <style lang="scss">

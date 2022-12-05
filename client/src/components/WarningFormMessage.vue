@@ -8,7 +8,6 @@
       "
     >
       <i style="font-size: 13px" class="bi bi-exclamation-triangle"></i>
-      <!-- The name must contain more than 1 character -->
       {{ message }}
     </p>
   </Transition>

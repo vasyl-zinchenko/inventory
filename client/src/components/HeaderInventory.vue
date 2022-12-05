@@ -6,7 +6,7 @@
           <img class="header__logo-img" src="../assets/logo.png" />
         </div>
         <input
-          class="form-control mr-sm-3 h-25 form-control-sm"
+          class="header__search-field"
           v-model="store.searchQuery"
           name="query"
           type="search"
@@ -19,17 +19,8 @@
   </header>
 </template>
 
-<script>
-export default {
-  components: {
-    ClockDate,
-  },
-  methods: {},
-};
-</script>
-
 <script setup>
-import { useGeneralStore } from "../store/general";
+import { useGeneralStore } from "@/store/general";
 import ClockDate from "@/components/ClockDate";
 const store = useGeneralStore();
 </script>
@@ -63,6 +54,21 @@ const store = useGeneralStore();
 
   &__logo-img {
     height: 30px;
+  }
+
+  &__search-field {
+    background: #f0f3f5;
+    border: 1px white inset;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 11px;
+    padding: 2px 10px;
+    transition-duration: 0.5s;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
   }
 
   &__logo-search-block {

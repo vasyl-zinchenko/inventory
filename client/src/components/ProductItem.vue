@@ -1,10 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
-<!-- eslint-disable no-undef -->
-<!-- eslint-disable no-unused-vars -->
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/require-v-for-key -->
-<!-- eslint-disable vue/no-unused-vars -->
-
 <template>
   <section
     class="product-section-item"
@@ -18,17 +11,21 @@
       }"
       class="product-section-item_available"
     ></div>
+
     <img
       class="product-section-item__img"
-      v-bind:src="'http://localhost:3000/img/'+product.photo"
+      v-bind:src="useGeneralStore().baseImgUrl + product.photo"
       alt=""
     />
+
     <div class="product-section-item__title-wrapper">
       <span class="product-section-item__title-wrapper_title">{{
         product.title
       }}</span>
+
       <span class="product-section-item__title-wrapper_serial-number"
-        >SN-{{ product.serialNumber }}</span>
+        >SN-{{ product.serialNumber }}</span
+      >
     </div>
 
     <span
@@ -59,48 +56,49 @@
         >{{ product.price[1].value }} {{ product.price[1].symbol }}</span
       >
     </div>
-    <div style="display:flex; justify-content:start; width:100%">
-      <a
-      v-if='product.order.title' 
-      href="#"
-      @click="
-        currentOrder(order.id, order, order.title);
-        useOrderStore().isActive = true;
-      "
-      class="product-section-item__title_order"
-      >{{ orderTitle(product.order.title) }}
-    </a>
 
-    <a
-      v-else
-      href="#"
-      @click="
-        currentOrder(order.id, order);
-        useOrderStore().isActive = true;
-      "
-      class="product-section-item__title_order"
-      > -
-    </a>
-  </div>
+    <div style="display: flex; justify-content: start; width: 100%">
+      <a
+        v-if="product.order.title"
+        href="#"
+        @click="
+          currentOrder(order.id, order, order.title);
+          useOrderStore().isActive = true;
+        "
+        class="product-section-item__title_order"
+        >{{ orderTitle(product.order.title) }}
+      </a>
+
+      <a
+        v-else
+        href="#"
+        @click="
+          currentOrder(order.id, order);
+          useOrderStore().isActive = true;
+        "
+        class="product-section-item__title_order"
+      >
+        -
+      </a>
+    </div>
     <div>
-      <!-- <span class="product-section-item__value-end">250 000.50</span> -->
       <div class="product-section-item__date-from">
         {{ formatDate(product.order.date) }}
       </div>
     </div>
-          <!-- @click="store.deleteProduct(product.id); removeProduct(product.id);" -->
+
     <button
-      @click="currentProduct(product.id, product);
-      store.deleteProductsFromServer(store.currentProductId)
-      removeProduct(product.id)"
+      @click="
+        currentProduct(product.id, product);
+        store.deleteProductsFromServer(store.currentProductId);
+        removeProduct(product.id);
+      "
       class="btn btn-light btn-sm"
     >
-      <i class="bi bi-trash3-fill" style="font-size: 12px" 
-></i>
+      <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
     </button>
   </section>
 </template>
-<!-- eslint-disable no-unused-vars -->
 
 <script setup>
 import { useProductStore } from "@/store/products";
@@ -110,7 +108,6 @@ import { onMounted, computed } from "vue";
 
 const store = useProductStore();
 
-// eslint-disable-next-line no-unused-vars
 const storeOrder = useOrderStore();
 
 const orders = computed(() => {
@@ -119,7 +116,6 @@ const orders = computed(() => {
 
 const orderTitle = (title) => (title ? title : "");
 
-// eslint-disable-next-line no-unused-vars
 const products = computed(() => {
   return store.products;
 });

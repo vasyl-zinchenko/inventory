@@ -1,18 +1,14 @@
-<!-- eslint-disable vue/valid-v-for -->
 <template>
   <div>
-    <!-- <section class="order-list">
-      <OrderItem v-if="useOrderStore().currentId === 0" />
-      <OrderItemCopy v-if="useOrderStore().currentId !== 0" />
-    </section> -->
     <section
       class="order-list"
       v-if="useOrderStore().currentTitle.length === 0"
     >
       <OrderItem :key="useGeneralStore().OrdersProductsKey" />
     </section>
+
     <section class="order-list" v-else>
-      <OrderItemCopy :key="useGeneralStore().OrdersProductsKey" />
+      <OrderDetails :key="useGeneralStore().OrdersProductsKey" />
     </section>
   </div>
 </template>
@@ -22,22 +18,12 @@ import OrderItem from "@/components/OrderItem.vue";
 import { useGeneralStore } from "@/store/general";
 import { computed } from "vue";
 import { useOrderStore } from "../store/order";
-import OrderItemCopy from "./OrderItemCopy.vue";
+import OrderDetails from "./OrderDetails.vue";
 
 const store = useOrderStore();
 
 const orders = computed(() => store.orders);
 console.log(orders);
-</script>
-
-<script>
-export default {
-  components: {
-    OrderItem,
-    OrderItemCopy,
-  },
-  methods: {},
-};
 </script>
 
 <style lang="scss" scoped>

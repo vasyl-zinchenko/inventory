@@ -1,6 +1,6 @@
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="generalStore.ShowModalAddOrder" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
@@ -25,6 +25,7 @@
                 placeholder="Add new order"
               />
             </slot>
+
             <Transition name="warning">
               <WarningFormMessage v-if="!store.title.trim()" />
             </Transition>
@@ -52,23 +53,10 @@
   </Transition>
 </template>
 
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-  components: {
-    WarningFormMessage,
-    Transition,
-  },
-};
-</script>
-
 <script setup>
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 import WarningFormMessage from "@/components/WarningFormMessage.vue";
-import { Transition } from "vue";
 
 const generalStore = useGeneralStore();
 const store = useOrderStore();

@@ -1,29 +1,6 @@
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-};
-</script>
-
-<script setup>
-import { computed } from "vue";
-import { useOrderStore } from "@/store/order";
-
-const store = useOrderStore();
-
-const currentOrder = computed(() => {
-  return store.currentOrder;
-});
-
-function isAvailable(status) {
-  return status === 0 ? "under repair" : "available";
-}
-</script>
-
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="useGeneralStore().showModal" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
@@ -38,6 +15,7 @@ function isAvailable(status) {
               x
             </button>
           </div>
+
           <div class="modal-body">
             <section
               class="order-section__item"
@@ -55,9 +33,10 @@ function isAvailable(status) {
 
               <img
                 class="order-section__item__img"
-                v-bind:src="'http://localhost:3000/img/' + order.photo"
+                v-bind:src="useGeneralStore().baseImgUrl + order.photo"
                 alt=""
               />
+
               <div class="order-section__item__title-wrapper">
                 <span class="order-section__item__title-wrapper_title">{{
                   order.title
@@ -77,6 +56,22 @@ function isAvailable(status) {
     </div>
   </Transition>
 </template>
+
+<script setup>
+import { computed } from "vue";
+import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
+
+const store = useOrderStore();
+
+const currentOrder = computed(() => {
+  return store.currentOrder;
+});
+
+function isAvailable(status) {
+  return status === 0 ? "under repair" : "available";
+}
+</script>
 
 <style lang="scss" scoped>
 .isAvailableSmbl {

@@ -1,20 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/require-v-for-key -->
-<!-- eslint-disable vue/no-unused-vars -->
-<script>
-import Modal from "@/components/ModalComponent.vue";
-import AddModalOrder from "@/components/AddOrderModal.vue"
-
-export default {
-  components: {
-    Modal,
-    // eslint-disable-next-line vue/no-unused-components
-    AddModalOrder,
-  },
-};
-</script>
-
 <template>
   <section
     class="order-section-item"
@@ -30,9 +13,11 @@ export default {
           useOrderStore().isActive = true;
         "
         class="order-section-item__title"
-        >{{ order.title }}</router-link
       >
+        {{ order.title }}
+      </router-link>
     </div>
+
     <button
       @click="currentOrder(order.id, order, order.title)"
       type="button"
@@ -41,6 +26,7 @@ export default {
     >
       <i class="bi bi-list-ul" style="font-size: 15px"></i>
     </button>
+
     <div class="order-section-item__count">
       <div class="order-section-item__count_number">
         {{ order.products.length }}
@@ -51,17 +37,11 @@ export default {
     <div class="order-section-item__date-from">
       {{ formatDate(order.date) }}
     </div>
-    <!-- <div>
-      <span class="order-section-item__value-start">2 500</span>
-      <span class="order-section-item__value-start-smbl">$</span>
-    </div> -->
+
     <div>
       <span class="order-section-item__value-end">250 000.50</span>
       <span class="order-section-item__value-end-smbl">UAH</span>
     </div>
-    <!-- <button @click='store.deleteOrderFromServer(order.id); removeOrder(order.id)' class="btn btn-light btn-sm">
-      <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
-    </button> -->
 
     <button
       id="show-modal"
@@ -75,7 +55,7 @@ export default {
       <i class="bi bi-trash3-fill" style="font-size: 12px"></i>
     </button>
   </section>
-  <!--ADD MODAL-->
+
   <Teleport to="body">
     <AddModalOrder
       :show="generalStore.ShowModalAddOrder"
@@ -84,7 +64,6 @@ export default {
     </AddModalOrder>
   </Teleport>
 
-  <!--DELETE ORDER MOFAL-->
   <Teleport to="body">
     <modal
       :show="generalStore.showModal"
@@ -125,6 +104,8 @@ import { useProductStore } from "@/store/products";
 import { onMounted, computed } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
+import Modal from "@/components/ModalComponent.vue";
+import AddModalOrder from "@/components/AddOrderModal.vue";
 
 const store = useOrderStore();
 const productSrore = useProductStore();
@@ -135,12 +116,6 @@ function forceUpadateComponent() {
     useGeneralStore().OrdersProductsKey += 1;
   }, 500);
 }
-
-//РОБОЧА ЗНИЗУ
-// store.title = store.title.replace(/^(\s)*/g, "");
-// function onSubmit() {
-//   return store.postOrder(store.title);
-// }
 
 const orders = computed(() => {
   return store.orders;
@@ -170,11 +145,6 @@ const deleteCurrentProducts = async () => {
   }
 };
 
-// function checkIdForModal(id, order) {
-//   store.currentModalId = id;
-//   store.currentOrder = order;
-// }
-
 store.fullOrders = computed(() => {
   return orders.value.map((order) => ({
     ...order,
@@ -191,7 +161,7 @@ store.filteredOrders = computed(() => {
       .includes(useGeneralStore().searchQuery.toLowerCase())
   );
 });
-// eslint-disable-next-line no-unused-vars
+
 function removeOrder(id) {
   store.orders = store.orders.filter((order) => order.id !== id);
 }
@@ -203,7 +173,6 @@ function formatDate(date) {
 onMounted(() => {
   store.fetchOrders();
   productSrore.fetchProducts();
-  // store.postOrder();
 });
 </script>
 
