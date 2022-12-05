@@ -3,10 +3,10 @@
 [DEMO LINK](https://vasylzinchenko.github.io/inventory/)
 ____________
 
-<p><img src="https://i.imgur.com/qaMsGOf.gif" alt="vue3" width="20" height="20"/> This was my first experience with Vue</p>
+<p><img src="https://cdn3d.iconscout.com/3d/free/thumb/vuejs-4387636-3640297.png" alt="vue3" width="20" height="20"/> This was my first experience with Vue</p>
 <p>🏆 And also a new personal achievement</p>
 
-<img src="" alt="vue.js" width="300" height="300"/>
+<img src="https://i.imgur.com/qaMsGOf.gif" alt="vue.js" width="300" height="300"/>
 <p>There are still some things in this app that could be improved 🛠️. But the main functionality works and that's good 👍</p>
 Here you can create an order, as well as products for it. To demonstrate, I created the data and some categories with a corresponding image.
 
