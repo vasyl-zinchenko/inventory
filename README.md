@@ -16,7 +16,7 @@ Here you can create an order, as well as products for it. To demonstrate, I crea
 <p align="left">
 <img src="https://nodejs.org/static/images/logo.svg" alt="node.js" width="45" height="45"/>
 <img src="https://github.com/sequelize.png?s=20" alt="sequelize" width="45" height="45"/>
-<img src="https://im4.ezgif.com/tmp/ezgif-4-bc430d5e-gif/download-png-638d8567b539e.png" alt="express.js" width="75" height="45"/>
+<img src="https://i.imgur.com/ki0nlwF.png" alt="express.js" width="75" height="45"/>
 <img src="https://www.postgresql.org/media/img/about/press/elephant.png" alt="node.js" width="45" height="45"/>
 
 -----------
