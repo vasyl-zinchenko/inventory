@@ -5,6 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "npm start --prefix server",
+    "setup": "npm i --prefix server && npm i --prefix client",
+    "server": "npm run dev --prefix server",
+    "client": "npm run serve --prefix client",
     "build": "npm run build --prefix server",
     "build:client": "npm run build --prefix client",
     "ci:client": "npm ci --prefix client"

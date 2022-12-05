@@ -16,14 +16,8 @@
 <script setup>
 import OrderItem from "@/components/OrderItem.vue";
 import { useGeneralStore } from "@/store/general";
-import { computed } from "vue";
 import { useOrderStore } from "../store/order";
 import OrderDetails from "./OrderDetails.vue";
-
-const store = useOrderStore();
-
-const orders = computed(() => store.orders);
-console.log(orders);
 </script>
 
 <style lang="scss" scoped>

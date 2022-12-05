@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useOrderStore } from "./order";
-axios.defaults.baseURL = "https://inventory-app-nejd.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000/";
 
 export const useProductStore = defineStore("products", {
   state: () => ({

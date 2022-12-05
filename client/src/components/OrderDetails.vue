@@ -90,16 +90,6 @@ function formatDate(date) {
   return date.slice(0, 10).replace(/-/g, " / ");
 }
 
-// onUnmounted(() => {
-//   console.log("Close" + store.currentOrder.products.length);
-// });
-
-// onUpdated(() => {
-//   console.log("Update" + store.currentOrder.products.length);
-//   store.orders;
-//   store.fullOrders;
-// });
-
 onMounted(() => {
   store.fetchOrders();
   productSrore.fetchProducts();
