@@ -47,10 +47,20 @@ Also:
 
 - Clone the forked repo be running
 - open the project
+- if cloud server render.com doesn't work, please replace
+  https://inventory-app-nejd.onrender.com/ with http://localhost:3000/ in files:
+  /inventory/client/src/store/general.js
+  /inventory/client/src/store/order.js
+  /inventory/client/src/store/products.js
 
 enter: 
- 1) npm run setup
- 2) npm run server
- 3) open a new terminal and enter: npm run client
- 4) follow the link: http://localhost:8080/inventory/
+  1) cd server
+  2) npm i
+  3) npm run dev
 
+open a new terminal and enter: 
+  1) cd ..
+  2) cd client
+  3) npm run i
+  5) npm run serve
+  6) follow the link: http://localhost:8080/inventory/
