@@ -115,6 +115,7 @@ export default {
           DELETE
         </button>
       </template>
+      <Transition />
     </modal>
   </Teleport>
 </template>

@@ -1,24 +1,3 @@
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-};
-</script>
-
-<script setup>
-import { useOrderStore } from "@/store/order";
-import { useGeneralStore } from "@/store/general";
-
-const generalStore = useGeneralStore();
-const store = useOrderStore();
-
-function onSubmit() {
-  store.postOrder(store.title);
-  useOrderStore().title = "";
-}
-</script>
-
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
@@ -43,14 +22,22 @@ function onSubmit() {
               <input
                 class="add-order-form__input"
                 v-model="store.title"
-                autofocus
                 placeholder="Add new order"
               />
             </slot>
+            <Transition name="warning">
+              <WarningFormMessage v-if="!store.title.trim()" />
+            </Transition>
 
             <div class="modal-component-footer">
               <slot name="footer">
-                <button class="modal-add-button">ADD</button>
+                <button
+                  :disabled="!store.title.trim()"
+                  class="modal-add-button"
+                  @click="generalStore.ShowModalAddOrder = false"
+                >
+                  ADD
+                </button>
 
                 <div
                   class="modal-close-link"
@@ -64,6 +51,37 @@ function onSubmit() {
     </div>
   </Transition>
 </template>
+
+<script>
+export default {
+  props: {
+    show: Boolean,
+  },
+  components: {
+    WarningFormMessage,
+    Transition,
+  },
+};
+</script>
+
+<script setup>
+import { useOrderStore } from "@/store/order";
+import { useGeneralStore } from "@/store/general";
+import WarningFormMessage from "@/components/WarningFormMessage.vue";
+import { Transition } from "vue";
+
+const generalStore = useGeneralStore();
+const store = useOrderStore();
+
+if (store.title.length >= 1) {
+  generalStore.isWarningMessageShown = false;
+}
+
+function onSubmit() {
+  store.postOrder(store.title);
+  store.title = "";
+}
+</script>
 
 <style lang="scss" scoped>
 .modal-close-link {
@@ -101,6 +119,13 @@ function onSubmit() {
   margin: 20px;
   transition-duration: 0.3s;
   box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
+
+  &:disabled {
+    cursor: not-allowed;
+    transform: none;
+    box-sizing: border-box;
+    box-shadow: none;
+  }
 
   &:hover {
     box-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
@@ -206,9 +231,6 @@ function onSubmit() {
     text-align: left;
   }
 }
-</style>
-
-<style lang="scss" scoped>
 .header {
   color: black;
 }

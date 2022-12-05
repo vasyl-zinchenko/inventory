@@ -1,12 +1,12 @@
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable no-unused-vars -->
 <template>
   <time class="date">
     <div class="date__weekday">{{ weekday }}</div>
     <div>
       {{ day }} {{ month }}, {{ year }}
-      <i 
-        style="color:#8ac349; margin: 0 5px 0 15px; font-weight: bolder;" class="bi bi-clock">
+      <i
+        style="color: #8ac349; margin: 0 5px 0 15px; font-weight: bolder"
+        class="bi bi-clock"
+      >
       </i>
       {{ hours }}:{{ minutes }}
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 
 let seconds = ref(0);
 let minutes = ref(0);
@@ -30,16 +30,22 @@ function getWeekDayName(value) {
   switch (value) {
     case 1:
       return "Monday";
+
     case 2:
       return "Tuesday";
+
     case 3:
       return "Wednesday";
+
     case 4:
       return "Thursday";
+
     case 5:
       return "Friday";
+
     case 6:
       return "Saturday";
+
     case 0:
       return "Sunday";
 
@@ -48,41 +54,32 @@ function getWeekDayName(value) {
   }
 }
 
-let timeId = setInterval(() => {
-  seconds.value = addZero(`${new Date().getSeconds()}`);
-  minutes.value = addZero(`${new Date().getMinutes()}`);
-  hours.value = addZero(`${new Date().getHours()}`);
-  day.value = addZero(`${new Date().getDate()}`);
-  month.value = `${new Date()}`.slice(4, 7);
-  year.value = `${new Date().getFullYear()}`;
-  weekday.value = getWeekDayName(new Date().getDay());
-  minutes.value;
-}, 1000);
+let timerId = 0;
 
-clearInterval(() => {
-  timeId;
-}, 10000);
+onBeforeMount(() => {
+  timerId = setInterval(() => {
+    seconds.value = addZero(`${new Date().getSeconds()}`);
+    minutes.value = addZero(`${new Date().getMinutes()}`);
+    hours.value = addZero(`${new Date().getHours()}`);
+    day.value = addZero(`${new Date().getDate()}`);
+    month.value = `${new Date()}`.slice(4, 7);
+    year.value = `${new Date().getFullYear()}`;
+    weekday.value = getWeekDayName(new Date().getDay());
+    minutes.value;
+  }, 1000);
+});
 
-// let timerId = 0;
-
-// onBeforeMount(() => {
-//   timerId = window.setInterval(() => {
-//     const today = new Date();
-//     fullDate = today;
-//   }, 1000);
-// });
-
-// onBeforeUnmount(() => {
-//   window.clearInterval(timerId);
-// });
+onBeforeUnmount(() => {
+  window.clearInterval(timerId);
+});
 </script>
 
 <style scoped lang="scss">
 .date {
   display: flex;
-  font-size: 10px;
   flex-direction: column;
   align-items: start;
+  font-size: 10px;
 
   &__weekday {
     font-size: 11px;

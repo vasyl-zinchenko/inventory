@@ -10,5 +10,6 @@ export const useGeneralStore = defineStore("general", {
     ShowModalAddProduct: false,
     OrdersProductsKey: 0,
     currentProductsList: [],
+    isWarningMessageShown: true,
   }),
 });

@@ -3,6 +3,9 @@ export default {
   props: {
     show: Boolean,
   },
+  components: {
+    WarningFormMessage,
+  },
 };
 </script>
 
@@ -11,6 +14,7 @@ export default {
 import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
+import WarningFormMessage from "@/components/WarningFormMessage.vue";
 // eslint-disable-next-line no-unused-vars
 import { useProductStore } from "@/store/products";
 
@@ -27,6 +31,23 @@ onUnmounted(() => {
 
 storeProduct.newProduct.order = useOrderStore().currentId;
 
+switch (storeProduct.newProduct.type) {
+  case "Monitors":
+    storeProduct.newProduct.photo = "monitor.jpg";
+    break;
+
+  case "Phones":
+    storeProduct.newProduct.photo = "mob.jpg";
+    break;
+
+  case "Laptops":
+    storeProduct.newProduct.photo = "laptop.jpg";
+    break;
+
+  default:
+    break;
+}
+
 function onSubmit() {
   storeProduct.postProduct(
     storeProduct.newProduct.title,
@@ -37,11 +58,11 @@ function onSubmit() {
     storeProduct.newProduct.specification,
     storeProduct.newProduct.order
   );
-  // storeProduct.newProduct.title = "";
-  // storeProduct.newProduct.serialNumber = "";
-  // storeProduct.newProduct.photo = "";
-  // storeProduct.newProduct.type = "";
-  // storeProduct.newProduct.specification = "";
+  storeProduct.newProduct.title = "";
+  storeProduct.newProduct.serialNumber = "";
+  storeProduct.newProduct.photo = "";
+  storeProduct.newProduct.type = "";
+  storeProduct.newProduct.specification = "";
 }
 </script>
 
@@ -85,16 +106,47 @@ function onSubmit() {
                 />
               </label>
 
-              <label class="form-field">
+              <!-- <label class="form-field">
                 New
-                <input
+                <select
+                  style="padding: 2px"
                   class="add-order-form__input"
                   v-model="storeProduct.newProduct.isNew"
-                  autofocus
-                />
-              </label>
+                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
+                >
+                  <option
+                    v-for="option in storeProduct.isNew"
+                    v-bind:value="option"
+                    v-bind:key="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </label> -->
+              <section class="add-order-form__radio">
+                <label class="add-order-form__radio_label" for="one"
+                  >New
+                  <input
+                    type="radio"
+                    id="one"
+                    value="1"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
 
-              <label class="form-field">
+                <label class="add-order-form__radio_label" for="two"
+                  >Used
+                  <input
+                    style="margin-right: 5px"
+                    type="radio"
+                    id="two"
+                    value="0"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
+              </section>
+
+              <label class="form-field" style="display: none">
                 Photo
                 <input
                   class="add-order-form__input"
@@ -105,11 +157,20 @@ function onSubmit() {
 
               <label class="form-field">
                 Type
-                <input
+                <select
+                  style="padding: 2px"
                   class="add-order-form__input"
                   v-model="storeProduct.newProduct.type"
-                  autofocus
-                />
+                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
+                >
+                  <option
+                    v-for="option in storeProduct.optionsTypeProduct.slice(1)"
+                    v-bind:value="option"
+                    v-bind:key="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
               </label>
 
               <label class="form-field">
@@ -131,10 +192,32 @@ function onSubmit() {
                 />
               </label>
             </slot>
-
+            <Transition name="warning">
+              <WarningFormMessage
+                v-if="
+                  !storeProduct.newProduct.title.trim() ||
+                  !storeProduct.newProduct.serialNumber.trim() ||
+                  !storeProduct.newProduct.photo.trim() ||
+                  !storeProduct.newProduct.type.trim() ||
+                  !storeProduct.newProduct.specification.trim()
+                "
+              />
+            </Transition>
             <div class="modal-component-footer">
               <slot name="footer">
-                <button class="modal-add-button">ADD</button>
+                <button
+                  @click="generalStore.ShowModalAddProduct = false"
+                  class="modal-add-button"
+                  :disabled="
+                    !storeProduct.newProduct.title.trim() ||
+                    !storeProduct.newProduct.serialNumber.trim() ||
+                    !storeProduct.newProduct.photo.trim() ||
+                    !storeProduct.newProduct.type.trim() ||
+                    !storeProduct.newProduct.specification.trim()
+                  "
+                >
+                  ADD
+                </button>
 
                 <div
                   class="modal-close-link"
@@ -186,6 +269,13 @@ function onSubmit() {
   transition-duration: 0.3s;
   box-shadow: 1px 9px 8px 3px rgba(124, 122, 122, 0.456);
 
+  &:disabled {
+    cursor: not-allowed;
+    transform: none;
+    box-sizing: border-box;
+    box-shadow: none;
+  }
+
   &:hover {
     box-shadow: 2px 1px 2px rgba(150, 150, 150, 1);
   }
@@ -195,7 +285,6 @@ function onSubmit() {
     transform: translateY(-1px);
   }
 }
-
 .isAvailableSmbl {
   background-color: #cddc39;
 }
@@ -316,7 +405,18 @@ function onSubmit() {
     overflow-x: hidden;
   }
 
-  &__input {
+  &__radio {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin: 10px 20px;
+    gap: 15px;
+
+    &_label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
 .modal-mask {

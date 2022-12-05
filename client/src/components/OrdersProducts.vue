@@ -19,7 +19,6 @@
       class="order-section__add-product"
     >
       <button class="order-section__add-product_button">+</button>
-      {{ useOrderStore().currentOrder.products.length }}
       <span class="order-section__add-product_text">Add product</span>
     </section>
     <AddProductModalVue />

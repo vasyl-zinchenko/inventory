@@ -13,7 +13,7 @@
           aria-label="Default select example"
         >
           <option
-            v-for="option in optionsTypeProduct"
+            v-for="option in store.optionsTypeProduct"
             v-bind:value="option"
             style="color: black"
             v-bind:key="option"
@@ -36,22 +36,9 @@ import { onMounted, computed } from "vue";
 const store = useProductStore();
 const storeGeneral = useGeneralStore();
 
-const optionsTypeProduct = ["All", "Monitors", "Phones", "Laptops"];
-
-const products = computed(() => {
-  return store.products;
-});
-
 onMounted(() => {
   store.fetchProducts();
 });
-
-// const optionsTypeProduct = {
-//   all: "All",
-//   monitors: "Monitors",
-//   phones: "Phones",
-//   laptops: "Laptops",
-// };
 </script>
 
 <script>
