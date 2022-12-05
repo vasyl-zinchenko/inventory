@@ -47,9 +47,10 @@ Also:
 
 - Clone the forked repo be running
 - open the project
-- enter: 
-1) npm run setup
-2) npm run server
-3) open new terminal and enter: npm run client
-4) follow the link: http://localhost:8080/inventory/
+
+enter: 
+ 1) npm run setup
+ 2) npm run server
+ 3) open a new terminal and enter: npm run client
+ 4) follow the link: http://localhost:8080/inventory/
 
