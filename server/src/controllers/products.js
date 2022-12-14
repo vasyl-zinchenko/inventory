@@ -28,23 +28,8 @@ export const add = async(req, res) => {
     photo,
     type,
     specification,
-    // price,
-    // guarantee,
     order,
   } = req.body;
-
-  // if (!title
-  //     || !isNew
-  //     || !serialNumber
-  //     || !photo
-  //     || !type
-  //     || !specification
-  //     || !order
-  //     ){
-  //     res.sendStatus(400);
-
-  //     return;
-  // }
 
   try {
     const newProduct = await productService
@@ -55,8 +40,6 @@ export const add = async(req, res) => {
       photo,
       type,
       specification,
-      // price,
-      // guarantee,
       order,
     );
 
