@@ -25,21 +25,11 @@
   </section>
 </template>
 
-<script>
-import { useGeneralStore } from "@/store/general";
-import OrdersList from "@/components/OrdersList.vue";
-import OrdersProducts from "@/components/OrdersProducts.vue";
-export default {
-  name: "orderList",
-  components: {
-    OrdersList,
-    OrdersProducts,
-  },
-};
-</script>
-
 <script setup>
 import { useOrderStore } from "../store/order";
+import { useGeneralStore } from "@/store/general";
+import OrdersList from "@/components/orders/OrdersList.vue";
+import OrdersProducts from "@/components/orders/OrdersProducts.vue";
 </script>
 
 <style lang="scss">

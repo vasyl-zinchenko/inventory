@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import ProductItem from "@/components/ProductItem.vue";
+import ProductItem from "@/components/products/ProductItem.vue";
 import { useGeneralStore } from "@/store/general";
 </script>
 

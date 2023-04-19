@@ -4,16 +4,9 @@
   <router-view />
 </template>
 
-<script>
-import MainMenu from "@/components/MainMenu.vue";
-import HeaderInventory from "@/components/HeaderInventory.vue";
-export default {
-  name: "app",
-  components: {
-    HeaderInventory,
-    MainMenu,
-  },
-};
+<script setup>
+import MainMenu from "@/layouts/MainMenu.vue";
+import HeaderInventory from "@/layouts/HeaderInventory.vue";
 </script>
 
 <style lang="scss">

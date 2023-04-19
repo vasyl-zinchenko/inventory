@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { onMounted } from "vue";
+import { useProductStore } from "./products";
 axios.defaults.baseURL = "https://inventory-app-nejd.onrender.com/";
 
 export const useOrderStore = defineStore("orders", {
@@ -18,6 +19,23 @@ export const useOrderStore = defineStore("orders", {
     title: "",
     isLoading: false,
   }),
+
+  getters: {
+    getFullOrders() {
+      return this.orders.map((order) => ({
+        ...order,
+        products: useProductStore().products.filter(
+          (product) => product.order === order.id
+        ),
+      }));
+    },
+
+    getFilteredOrders() {
+      return this.getFullOrders.filter((order) =>
+        order.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
 
   actions: {
     async fetchOrders() {
@@ -50,4 +68,5 @@ export const useOrderStore = defineStore("orders", {
 
 onMounted(() => {
   useOrderStore.fetchOrders();
+  useProductStore.fetchProducts();
 });

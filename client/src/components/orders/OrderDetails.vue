@@ -1,25 +1,20 @@
-<!-- eslint-disable no-unused-vars -->
-<!-- eslint-disable prettier/prettier -->
-<!-- eslint-disable vue/require-v-for-key -->
-<!-- eslint-disable vue/no-unused-vars -->
-
 <template>
   <section
-  :class="{ isActive: useOrderStore().currentOrder.id === order.id }"
+    :class="{ isActive: useOrderStore().currentOrder.id === order.id }"
     class="container"
-    v-for="order in store.filteredOrders"
+    v-for="order in store.getFilteredOrders"
     :key="order.id"
   >
-    <section
-      class="order-section-item"
-    >
+    <section class="order-section-item">
       <button
         @click="currentOrder(order.id, order, order.title)"
         type="button"
         class="btn btn-light btn-sm btn-rounded btn-floating"
         data-mdb-ripple-color="dark"
       >
-        <a style="color:#000" href="#"><i class="bi bi-list-ul" style="font-size: 15px"></i></a>
+        <a style="color: #000" href="#"
+          ><i class="bi bi-list-ul" style="font-size: 15px"></i
+        ></a>
       </button>
       <div class="order-section-item__count">
         <div class="order-section-item__count_number">
@@ -49,17 +44,11 @@
 
 <script setup>
 import { useProductStore } from "@/store/products";
-// eslint-disable-next-line no-unused-vars
-import { onMounted, computed, onUnmounted, onUpdated } from "vue";
+import { onMounted } from "vue";
 import { useOrderStore } from "@/store/order";
 
 const store = useOrderStore();
 const productSrore = useProductStore();
-
-// eslint-disable-next-line no-unused-vars
-const orders = computed(() => {
-  return store.orders;
-});
 
 function currentOrder(id, order, title) {
   store.currentId = id;
@@ -68,23 +57,8 @@ function currentOrder(id, order, title) {
   useProductStore().newProduct.order = id;
 }
 
-store.fullOrders = computed(() => {
-  return orders.value.map((order) => ({
-    ...order,
-    products: productSrore.products.filter(
-      (product) => product.order === order.id
-    ),
-  }));
-});
-
 useOrderStore().isActive =
   useOrderStore().currentId === useOrderStore().currentOrder.id ? true : false;
-
-store.filteredOrders = computed(() => {
-  return store.fullOrders.filter((order) =>
-    order.title.toLowerCase().includes(store.searchQuery.toLowerCase())
-  );
-});
 
 function formatDate(date) {
   return date.slice(0, 10).replace(/-/g, " / ");

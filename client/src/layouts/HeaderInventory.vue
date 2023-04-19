@@ -21,7 +21,7 @@
 
 <script setup>
 import { useGeneralStore } from "@/store/general";
-import ClockDate from "@/components/ClockDate";
+import ClockDate from "@/components/clock/ClockDate.vue";
 const store = useGeneralStore();
 </script>
 

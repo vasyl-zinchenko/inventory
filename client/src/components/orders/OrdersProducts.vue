@@ -61,8 +61,7 @@
         class="btn btn-sm"
         style="border: none"
         @click="
-          (useGeneralStore().OrdersProductsKey += 1),
-            currentProduct(order.id, order),
+          currentProduct(order.id, order),
             removeProduct(order.id),
             useProductStore().deleteProductsFromServer(
               useProductStore().currentProductId
@@ -89,19 +88,9 @@
   </Teleport>
 </template>
 
-<script>
-import AddModalOrder from "@/components/AddOrderModal.vue";
-import AddProductModal from "@/components/AddProductModal.vue";
-
-export default {
-  components: {
-    AddModalOrder,
-    AddProductModal,
-  },
-};
-</script>
-
 <script setup>
+import AddModalOrder from "@/components/orders/AddOrderModal.vue";
+import AddProductModal from "@/components/products/AddProductModal.vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
 import { useProductStore } from "@/store/products";

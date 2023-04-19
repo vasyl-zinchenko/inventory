@@ -9,7 +9,7 @@
         :to="{ params: { id: order.id } }"
         @click="
           currentOrder(order.id, order, order.title);
-          useGeneralStore().currentProductsList.push(order.products);
+          // useGeneralStore().currentProductsList.push(order.products);
           useOrderStore().isActive = true;
         "
         class="order-section-item__title"
@@ -104,8 +104,8 @@ import { useProductStore } from "@/store/products";
 import { onMounted, computed } from "vue";
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
-import Modal from "@/components/ModalComponent.vue";
-import AddModalOrder from "@/components/AddOrderModal.vue";
+import Modal from "@/components/dialog/ModalComponent.vue";
+import AddModalOrder from "@/components/orders/AddOrderModal.vue";
 
 const store = useOrderStore();
 const productSrore = useProductStore();

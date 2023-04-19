@@ -1,10 +1,11 @@
 <template>
   <Transition name="modal">
-    <div v-if="generalStore.ShowModalAddOrder" class="modal-mask">
+    <div v-if="generalStore.ShowModalAddProduct" class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header">Name the new order</slot>
+            <slot name="header">Fill in all fields</slot>
+
             <button
               @click="$emit('close')"
               class="order-section__btn-close"
@@ -19,30 +20,106 @@
             class="add-order-form"
           >
             <slot name="body" class="modal-body">
-              <input
-                class="add-order-form__input"
-                v-model="store.title"
-                placeholder="Add new order"
-              />
+              <label class="form-field">
+                Title
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.title"
+                />
+              </label>
+
+              <label class="form-field">
+                Serial Number
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.serialNumber"
+                />
+              </label>
+
+              <section class="add-order-form__radio">
+                <label class="add-order-form__radio_label" for="one"
+                  >New
+                  <input
+                    type="radio"
+                    id="one"
+                    value="1"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
+
+                <label class="add-order-form__radio_label" for="two">
+                  Used
+                  <input
+                    style="margin-right: 5px"
+                    type="radio"
+                    id="two"
+                    value="0"
+                    v-model="storeProduct.newProduct.isNew"
+                  />
+                </label>
+              </section>
+
+              <label class="form-field" style="display: none">
+                Photo
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.photo"
+                />
+              </label>
+
+              <label class="form-field">
+                Type
+                <select
+                  style="padding: 2px"
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.type"
+                  v-on:change="useGeneralStore().OrdersProductsKey += 1"
+                >
+                  <option
+                    v-for="option in storeProduct.optionsTypeProduct.slice(1)"
+                    v-bind:value="option"
+                    v-bind:key="option"
+                  >
+                    {{ option }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="form-field">
+                Specification
+                <input
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.specification"
+                />
+              </label>
+
+              <label class="form-field">
+                Order
+                <input
+                  disabled
+                  class="add-order-form__input"
+                  v-model="storeProduct.newProduct.order"
+                />
+              </label>
             </slot>
 
             <Transition name="warning">
-              <WarningFormMessage v-if="!store.title.trim()" />
+              <WarningFormMessage v-if="!requiredSizeInput" />
             </Transition>
 
             <div class="modal-component-footer">
               <slot name="footer">
                 <button
-                  :disabled="!store.title.trim()"
+                  @click="generalStore.ShowModalAddProduct = false"
                   class="modal-add-button"
-                  @click="generalStore.ShowModalAddOrder = false"
+                  :disabled="!requiredSizeInput"
                 >
                   ADD
                 </button>
 
                 <div
                   class="modal-close-link"
-                  @click="generalStore.ShowModalAddOrder = false"
+                  @click="generalStore.ShowModalAddProduct = false"
                 ></div>
               </slot>
             </div>
@@ -56,19 +133,58 @@
 <script setup>
 import { useOrderStore } from "@/store/order";
 import { useGeneralStore } from "@/store/general";
-import WarningFormMessage from "@/components/WarningFormMessage.vue";
+import WarningFormMessage from "@/components/messages/WarningFormMessage.vue";
+import { useProductStore } from "@/store/products";
+import { computed } from "@vue/reactivity";
 
 const generalStore = useGeneralStore();
-const store = useOrderStore();
+const storeProduct = useProductStore();
 
-if (store.title.length >= 1) {
-  generalStore.isWarningMessageShown = false;
+storeProduct.newProduct.order = useOrderStore().currentId;
+
+switch (storeProduct.newProduct.type) {
+  case "Monitors":
+    storeProduct.newProduct.photo = "monitor.jpg";
+    break;
+
+  case "Phones":
+    storeProduct.newProduct.photo = "mob.jpg";
+    break;
+
+  case "Laptops":
+    storeProduct.newProduct.photo = "laptop.jpg";
+    break;
+
+  default:
+    break;
 }
 
 function onSubmit() {
-  store.postOrder(store.title);
-  store.title = "";
+  storeProduct.postProduct(
+    storeProduct.newProduct.title,
+    storeProduct.newProduct.serialNumber,
+    storeProduct.newProduct.isNew,
+    storeProduct.newProduct.photo,
+    storeProduct.newProduct.type,
+    storeProduct.newProduct.specification,
+    storeProduct.newProduct.order
+  );
+  storeProduct.newProduct.title = "";
+  storeProduct.newProduct.serialNumber = "";
+  storeProduct.newProduct.photo = "";
+  storeProduct.newProduct.type = "";
+  storeProduct.newProduct.specification = "";
 }
+
+const requiredSizeInput = computed(() => {
+  return (
+    storeProduct.newProduct.title.trim().length > 4 &&
+    storeProduct.newProduct.serialNumber.trim().length > 4 &&
+    storeProduct.newProduct.photo.trim().length > 4 &&
+    storeProduct.newProduct.type.trim().length > 4 &&
+    storeProduct.newProduct.specification.trim().length > 4
+  );
+});
 </script>
 
 <style lang="scss" scoped>
@@ -124,7 +240,6 @@ function onSubmit() {
     transform: translateY(-1px);
   }
 }
-
 .isAvailableSmbl {
   background-color: #cddc39;
 }
@@ -219,16 +334,44 @@ function onSubmit() {
     text-align: left;
   }
 }
+</style>
+
+<style lang="scss" scoped>
 .header {
   color: black;
 }
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px 15px;
+  font-size: 14px;
 
+  @media (min-width: 768px) {
+    font-size: 12px;
+    margin: 0 20px 10px;
+  }
+}
 .add-order-form {
   display: flex;
   flex-direction: column;
 
-  &__input {
-    margin: 0 20px 15px;
+  @media (max-width: 768px) {
+    height: 400px;
+    overflow-x: hidden;
+  }
+
+  &__radio {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin: 10px 20px;
+    gap: 15px;
+
+    &_label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
 .modal-mask {
@@ -258,14 +401,12 @@ function onSubmit() {
 }
 
 .modal-container {
-  min-width: 550px;
+  min-width: 400px;
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-  position: absolute;
-  top: 200px;
-  left: 200px;
+  top: 50px;
 }
 
 .modal-header {

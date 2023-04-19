@@ -17,8 +17,8 @@
 import { useGeneralStore } from "@/store/general";
 
 let message = useGeneralStore().ShowModalAddOrder
-  ? "The name must contain more than 1 character"
-  : "Every field must contain more than 1 character";
+  ? "The name must contain more than 4 character"
+  : "Every field must contain more than 4 character";
 </script>
 
 <style scoped>

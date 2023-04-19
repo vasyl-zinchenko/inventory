@@ -32,7 +32,7 @@
 <script setup>
 import { useProductStore } from "@/store/products";
 import { useGeneralStore } from "@/store/general";
-import ProductsList from "@/components/ProductsList.vue";
+import ProductsList from "@/components/products/ProductsList";
 import { onMounted } from "vue";
 
 const store = useProductStore();
