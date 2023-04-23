@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>
-      Please wait 10-20s<br />
+      Please wait 30-60s<br />
       while the data is downloaded <br />
       from the free server
     </h3>
