@@ -1,6 +1,6 @@
 <h2>Inventory demo-app</h2>
 
-[DEMO LINK](https://vasylzinchenko.github.io/inventory/)
+[DEMO LINK](https://vasyl-zinchenko.github.io/inventory/)
 ____________
 
 <p><img src="https://cdn3d.iconscout.com/3d/free/thumb/vuejs-4387636-3640297.png" alt="vue3" width="20" height="20"/> This was my first experience with Vue</p>
